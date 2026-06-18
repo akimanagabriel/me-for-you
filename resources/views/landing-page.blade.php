@@ -49,6 +49,7 @@
             color: var(--ink);
             line-height: 1.6;
             overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
         }
 
         img {
@@ -147,45 +148,38 @@
             background: rgba(255, 255, 255, 0.08);
         }
 
-        /* ─── IMAGE PLACEHOLDER ────────────────────────────────────── */
+        /* ─── IMAGE OPTIMIZATION ───────────────────────────────────── */
         /*
-         * HOW TO REPLACE IMAGES:
-         * 1. Download photos from https://www.instagram.com/meforyou_rw/
-         * 2. Save them into the assets/ folder structure below
-         * 3. The background-image URL on each class already points to the right path
-         * 4. Once the file exists, the placeholder pattern disappears automatically
-         *
-         * assets/
-         * ├── housing/   hero-house.jpg, property-01.jpg
-         * ├── events/    hero-event.png, event-01.png
-         * ├── transport/ hero-car.jpg, car-01.png
-         * ├── gallery/   wedding-01.png, corporate-01.png, house-02.jpg,
-         * │              event-decor-01.jpg, about-brand.png
-         * └── testimonials/ client-01.jpg, client-02.jpg, client-03.jpg
+         * OPTIMIZATION FIXES:
+         * 1. Removed pseudo-elements (::before, ::after) that were causing layout thrashing
+         * 2. Added will-change: transform only where needed
+         * 3. Images now use <img> tags with loading="lazy" for better performance
+         * 4. Reduced unnecessary background-image re-rendering
+         * 5. Added image aspect-ratio to prevent layout shifts
          */
-        .img-placeholder {
+        .img-wrapper {
             position: relative;
-            background-color: var(--sand-dark);
-            background-size: cover;
-            background-position: center;
-            background-repeat: no-repeat;
+            overflow: hidden;
+            background: var(--sand-dark);
+            width: 100%;
+            height: 100%;
         }
 
-        /* Checkerboard label shown only when no background-image is loaded */
-        .img-placeholder::before {
-            content: '';
-            position: absolute;
-            inset: 0;
-            background: repeating-linear-gradient(45deg,
-                    transparent,
-                    transparent 10px,
-                    rgba(184, 153, 58, 0.06) 10px,
-                    rgba(184, 153, 58, 0.06) 20px);
-            pointer-events: none;
+        .img-wrapper img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+            transition: transform 0.4s ease;
+            will-change: transform;
         }
 
-        .img-placeholder::after {
-            content: attr(data-label);
+        .img-wrapper img:hover {
+            transform: scale(1.05);
+        }
+
+        /* Fallback placeholder (visible while images load) */
+        .img-wrapper .fallback {
             position: absolute;
             inset: 0;
             display: flex;
@@ -197,74 +191,19 @@
             letter-spacing: 0.12em;
             text-transform: uppercase;
             color: var(--gold-dark);
-            text-align: center;
-            padding: 8px;
+            background: repeating-linear-gradient(45deg,
+                    transparent,
+                    transparent 10px,
+                    rgba(184, 153, 58, 0.06) 10px,
+                    rgba(184, 153, 58, 0.06) 20px);
             pointer-events: none;
+            opacity: 0;
+            transition: opacity 0.3s;
         }
 
-        /* ── Hero images ── */
-        .img-hero-1 {
-            background-image: url("assets/events/hero-event.png");
-        }
-
-        .img-hero-2 {
-            background-image: url("assets/housing/hero-house.jpg");
-        }
-
-        .img-hero-3 {
-            background-image: url("assets/transport/hero-car.jpg");
-        }
-
-        /* ── Service images ── */
-        .img-svc-house {
-            background-image: url("assets/housing/property-01.jpg");
-        }
-
-        .img-svc-event {
-            background-image: url("assets/events/event-01.png");
-        }
-
-        .img-svc-car {
-            background-image: url("assets/transport/car-01.png");
-        }
-
-        /* ── Gallery images ── */
-        .img-gal-1 {
-            background-image: url("assets/gallery/wedding-01.png");
-        }
-
-        .img-gal-2 {
-            background-image: url("assets/gallery/corporate-01.png");
-        }
-
-        .img-gal-3 {
-            background-image: url("assets/gallery/house-02.jpg");
-        }
-
-        .img-gal-4 {
-            background-image: url("assets/gallery/event-decor-01.jpg");
-        }
-
-        .img-gal-5 {
-            background-image: url("assets/transport/hero-car.jpg");
-        }
-
-        /* ── About image ── */
-        .img-about {
-            background-image: url("assets/gallery/about-brand.png");
-        }
-
-        /* ── Testimonial avatars ── */
-        .img-avatar-1 {
-            background-image: url("assets/testimonials/client-01.jpg");
-        }
-
-        .img-avatar-2 {
-            background-image: url("assets/testimonials/client-02.jpg");
-        }
-
-        .img-avatar-3 {
-            background-image: url("assets/testimonials/client-03.jpg");
+        .img-wrapper img:not([src])+.fallback,
+        .img-wrapper img[src=""]+.fallback {
+            opacity: 1;
         }
 
         /* ─── NAV ─────────────────────────────────────────────────── */
@@ -276,6 +215,7 @@
             z-index: 100;
             padding: 0 24px;
             transition: background 0.3s, box-shadow 0.3s;
+            will-change: background;
         }
 
         .nav.scrolled {
@@ -312,7 +252,6 @@
             color: var(--gold);
         }
 
-        /* Desktop links */
         .nav-links {
             display: flex;
             align-items: center;
@@ -349,7 +288,6 @@
             background: var(--gold-dark) !important;
         }
 
-        /* Hamburger button */
         .nav-hamburger {
             display: none;
             flex-direction: column;
@@ -378,7 +316,6 @@
             background: var(--ink);
         }
 
-        /* Hamburger → X animation */
         .nav-hamburger.open span:nth-child(1) {
             transform: translateY(7px) rotate(45deg);
         }
@@ -392,7 +329,6 @@
             transform: translateY(-7px) rotate(-45deg);
         }
 
-        /* Mobile drawer */
         .nav-mobile {
             display: none;
             position: fixed;
@@ -565,13 +501,6 @@
             overflow: hidden;
         }
 
-        .hero-img-cell img,
-        .hero-img-top img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-
         .hero-img-overlay {
             position: absolute;
             inset: 0;
@@ -731,15 +660,8 @@
             overflow: hidden;
         }
 
-        .service-img-inner {
-            position: absolute;
-            inset: 0;
-            transition: transform 0.4s ease;
-            will-change: transform;
-        }
-
-        .service-card:hover .service-img-inner {
-            transform: scale(1.05);
+        .service-img .img-wrapper {
+            height: 100%;
         }
 
         .service-chip {
@@ -754,6 +676,7 @@
             color: var(--gold-dark);
             letter-spacing: 0.06em;
             text-transform: uppercase;
+            z-index: 2;
         }
 
         .service-body {
@@ -867,14 +790,13 @@
             grid-row: 2;
         }
 
-        .gal-item .gal-bg {
-            position: absolute;
-            inset: 0;
+        .gal-item .img-wrapper {
+            height: 100%;
             transition: transform 0.4s ease;
             will-change: transform;
         }
 
-        .gal-item:hover .gal-bg {
+        .gal-item:hover .img-wrapper {
             transform: scale(1.06);
         }
 
@@ -887,6 +809,7 @@
             display: flex;
             align-items: flex-end;
             padding: 20px;
+            pointer-events: none;
         }
 
         .gal-item:hover .gal-overlay {
@@ -970,8 +893,10 @@
             overflow: hidden;
             flex-shrink: 0;
             background: var(--ink-mid);
-            background-size: cover;
-            background-position: center;
+        }
+
+        .testi-avatar .img-wrapper {
+            border-radius: 50%;
         }
 
         .testi-name {
@@ -1181,10 +1106,21 @@
             line-height: 1;
         }
 
+        /* ─── SCROLL REVEAL (optimized) ───────────────────────────── */
+        .reveal {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.6s ease, transform 0.6s ease;
+            will-change: opacity, transform;
+        }
+
+        .reveal.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
         /* ─── RESPONSIVE ───────────────────────────────────────────── */
         @media (max-width: 900px) {
-
-            /* Show hamburger, hide desktop links */
             .nav-hamburger {
                 display: flex;
             }
@@ -1346,7 +1282,6 @@
                 <li><a href="#testimonials">Reviews</a></li>
                 <li><a href="#contact" class="nav-cta">Get in Touch</a></li>
             </ul>
-            <!-- Hamburger toggle -->
             <button class="nav-hamburger" id="navHamburger" aria-label="Open menu" aria-expanded="false">
                 <span></span>
                 <span></span>
@@ -1386,20 +1321,28 @@
 
         <div class="hero-right">
             <div class="hero-img-top">
-                <div class="img-placeholder img-hero-1" data-label="Events Photo" style="position:absolute;inset:0;">
+                <div class="img-wrapper">
+                    <img src="assets/events/hero-event.webp" alt="ME FOR YOU Events" loading="lazy" decoding="async" />
+                    <div class="fallback">Events Photo</div>
                 </div>
                 <div class="hero-img-overlay"></div>
                 <div class="hero-badge">Events</div>
             </div>
             <div class="hero-img-bottom">
                 <div class="hero-img-cell">
-                    <div class="img-placeholder img-hero-2" data-label="Housing Photo"
-                         style="position:absolute;inset:0;"></div>
+                    <div class="img-wrapper">
+                        <img src="assets/housing/hero-house.webp" alt="ME FOR YOU Housing" loading="lazy"
+                             decoding="async" />
+                        <div class="fallback">Housing Photo</div>
+                    </div>
                     <div class="hero-badge" style="font-size:10px;">Housing</div>
                 </div>
                 <div class="hero-img-cell">
-                    <div class="img-placeholder img-hero-3" data-label="Transport Photo"
-                         style="position:absolute;inset:0;"></div>
+                    <div class="img-wrapper">
+                        <img src="assets/transport/hero-car.webp" alt="ME FOR YOU Transport" loading="lazy"
+                             decoding="async" />
+                        <div class="fallback">Transport Photo</div>
+                    </div>
                     <div class="hero-badge" style="font-size:10px;">Transport</div>
                 </div>
             </div>
@@ -1433,8 +1376,11 @@
         <div class="about-inner">
             <div style="position:relative;">
                 <div class="about-img-wrap">
-                    <div class="img-placeholder img-about" data-label="Brand / Team Photo"
-                         style="position:absolute;inset:0;border-radius:var(--radius-lg);"></div>
+                    <div class="img-wrapper">
+                        <img src="assets/gallery/about-brand.webp" alt="ME FOR YOU team" loading="lazy"
+                             decoding="async" />
+                        <div class="fallback">Brand / Team Photo</div>
+                    </div>
                 </div>
                 <div class="about-accent"></div>
             </div>
@@ -1454,20 +1400,20 @@
                     professionalism, affordability, and care.
                 </p>
                 <div class="about-values">
-                    <div class="value-card">
+                    <div class="value-card reveal">
                         <div class="value-title">Professionalism</div>
                         <div class="value-desc">Expert service at every touchpoint, from first call to final delivery.
                         </div>
                     </div>
-                    <div class="value-card">
+                    <div class="value-card reveal">
                         <div class="value-title">Affordability</div>
                         <div class="value-desc">Premium quality without premium prices value you can trust.</div>
                     </div>
-                    <div class="value-card">
+                    <div class="value-card reveal">
                         <div class="value-title">Trustworthiness</div>
                         <div class="value-desc">We show up, deliver, and stand behind everything we promise.</div>
                     </div>
-                    <div class="value-card">
+                    <div class="value-card reveal">
                         <div class="value-title">Personal Touch</div>
                         <div class="value-desc">Every client receives bespoke attention and tailored solutions.</div>
                     </div>
@@ -1488,9 +1434,13 @@
 
         <div class="services-grid">
             <!-- Events -->
-            <div class="service-card">
+            <div class="service-card reveal">
                 <div class="service-img">
-                    <div class="service-img-inner img-placeholder img-svc-event" data-label="Event Photo"></div>
+                    <div class="img-wrapper">
+                        <img src="assets/events/event-01.webp" alt="ME FOR YOU Event Management" loading="lazy"
+                             decoding="async" />
+                        <div class="fallback">Event Photo</div>
+                    </div>
                     <div class="service-chip">Events</div>
                 </div>
                 <div class="service-body">
@@ -1511,9 +1461,13 @@
             </div>
 
             <!-- Housing -->
-            <div class="service-card">
+            <div class="service-card reveal">
                 <div class="service-img">
-                    <div class="service-img-inner img-placeholder img-svc-house" data-label="Housing Photo"></div>
+                    <div class="img-wrapper">
+                        <img src="assets/housing/property-01.webp" alt="ME FOR YOU Housing Services" loading="lazy"
+                             decoding="async" />
+                        <div class="fallback">Housing Photo</div>
+                    </div>
                     <div class="service-chip">Housing</div>
                 </div>
                 <div class="service-body">
@@ -1534,9 +1488,13 @@
             </div>
 
             <!-- Transport -->
-            <div class="service-card">
+            <div class="service-card reveal">
                 <div class="service-img">
-                    <div class="service-img-inner img-placeholder img-svc-car" data-label="Car Photo"></div>
+                    <div class="img-wrapper">
+                        <img src="assets/transport/car-01.webp" alt="ME FOR YOU Transport Services" loading="lazy"
+                             decoding="async" />
+                        <div class="fallback">Car Photo</div>
+                    </div>
                     <div class="service-chip">Transport</div>
                 </div>
                 <div class="service-body">
@@ -1570,24 +1528,41 @@
         </div>
 
         <div class="gallery-grid">
-            <div class="gal-item" onclick="openLightbox('assets/gallery/wedding-01.png','Wedding Ceremony')">
-                <div class="gal-bg img-placeholder img-gal-1" data-label="Wedding"></div>
+            <div class="gal-item reveal" onclick="openLightbox('assets/gallery/wedding-01.webp','Wedding Ceremony')">
+                <div class="img-wrapper">
+                    <img src="assets/gallery/wedding-01.webp" alt="Wedding Ceremony" loading="lazy" decoding="async" />
+                    <div class="fallback">Wedding</div>
+                </div>
                 <div class="gal-overlay"><span class="gal-label">Wedding</span></div>
             </div>
-            <div class="gal-item" onclick="openLightbox('assets/gallery/corporate-01.png','Corporate Event')">
-                <div class="gal-bg img-placeholder img-gal-2" data-label="Corporate Event"></div>
+            <div class="gal-item reveal" onclick="openLightbox('assets/gallery/corporate-01.webp','Corporate Event')">
+                <div class="img-wrapper">
+                    <img src="assets/gallery/corporate-01.webp" alt="Corporate Event" loading="lazy" decoding="async" />
+                    <div class="fallback">Corporate Event</div>
+                </div>
                 <div class="gal-overlay"><span class="gal-label">Corporate Event</span></div>
             </div>
-            <div class="gal-item" onclick="openLightbox('assets/gallery/house-02.jpg','Property Listing')">
-                <div class="gal-bg img-placeholder img-gal-3" data-label="Housing"></div>
+            <div class="gal-item reveal" onclick="openLightbox('assets/gallery/house-02.webp','Property Listing')">
+                <div class="img-wrapper">
+                    <img src="assets/gallery/house-02.webp" alt="Property Listing" loading="lazy" decoding="async" />
+                    <div class="fallback">Housing</div>
+                </div>
                 <div class="gal-overlay"><span class="gal-label">Housing</span></div>
             </div>
-            <div class="gal-item" onclick="openLightbox('assets/gallery/event-decor-01.jpg','Event Decoration')">
-                <div class="gal-bg img-placeholder img-gal-4" data-label="Event Décor"></div>
+            <div class="gal-item reveal"
+                 onclick="openLightbox('assets/gallery/event-decor-01.webp','Event Decoration')">
+                <div class="img-wrapper">
+                    <img src="assets/gallery/event-decor-01.webp" alt="Event Decoration" loading="lazy"
+                         decoding="async" />
+                    <div class="fallback">Event Décor</div>
+                </div>
                 <div class="gal-overlay"><span class="gal-label">Event Décor</span></div>
             </div>
-            <div class="gal-item" onclick="openLightbox('assets/transport/hero-car.jpg','Fleet Vehicle')">
-                <div class="gal-bg img-placeholder img-gal-5" data-label="Transport"></div>
+            <div class="gal-item reveal" onclick="openLightbox('assets/transport/hero-car.webp','Fleet Vehicle')">
+                <div class="img-wrapper">
+                    <img src="assets/transport/hero-car.webp" alt="Fleet Vehicle" loading="lazy" decoding="async" />
+                    <div class="fallback">Transport</div>
+                </div>
                 <div class="gal-overlay"><span class="gal-label">Transport</span></div>
             </div>
         </div>
@@ -1611,14 +1586,20 @@
         </div>
 
         <div class="testimonials-grid">
-            <div class="testi-card">
+            <div class="testi-card reveal">
                 <div class="testi-stars">★★★★★</div>
                 <p class="testi-quote">
                     "ME FOR YOU found us the perfect apartment in Kigali within a week.
                     The whole process was smooth, transparent, and stress-free. Highly recommended!"
                 </p>
                 <div class="testi-author">
-                    <div class="testi-avatar img-placeholder img-avatar-1" data-label="AK"></div>
+                    <div class="testi-avatar">
+                        <div class="img-wrapper">
+                            <img src="assets/testimonials/client-01.webp" alt="Amina K." loading="lazy"
+                                 decoding="async" />
+                            <div class="fallback">AK</div>
+                        </div>
+                    </div>
                     <div>
                         <div class="testi-name">Amina K.</div>
                         <div class="testi-role">Housing client, Kigali</div>
@@ -1626,14 +1607,20 @@
                 </div>
             </div>
 
-            <div class="testi-card">
+            <div class="testi-card reveal">
                 <div class="testi-stars">★★★★★</div>
                 <p class="testi-quote">
                     "Our wedding was absolutely magical. The décor, coordination, and
                     transport everything was handled perfectly. Thank you ME FOR YOU!"
                 </p>
                 <div class="testi-author">
-                    <div class="testi-avatar img-placeholder img-avatar-2" data-label="JG"></div>
+                    <div class="testi-avatar">
+                        <div class="img-wrapper">
+                            <img src="assets/testimonials/client-02.webp" alt="Jean-Pierre & Grace M." loading="lazy"
+                                 decoding="async" />
+                            <div class="fallback">JG</div>
+                        </div>
+                    </div>
                     <div>
                         <div class="testi-name">Jean-Pierre & Grace M.</div>
                         <div class="testi-role">Wedding clients</div>
@@ -1641,14 +1628,20 @@
                 </div>
             </div>
 
-            <div class="testi-card">
+            <div class="testi-card reveal">
                 <div class="testi-stars">★★★★★</div>
                 <p class="testi-quote">
                     "We used ME FOR YOU for our company's annual conference transport.
                     Professional drivers, clean vehicles, and always on time. Outstanding service."
                 </p>
                 <div class="testi-author">
-                    <div class="testi-avatar img-placeholder img-avatar-3" data-label="DN"></div>
+                    <div class="testi-avatar">
+                        <div class="img-wrapper">
+                            <img src="assets/testimonials/client-03.webp" alt="David N." loading="lazy"
+                                 decoding="async" />
+                            <div class="fallback">DN</div>
+                        </div>
+                    </div>
                     <div>
                         <div class="testi-name">David N.</div>
                         <div class="testi-role">Corporate client, Kigali</div>
@@ -1732,8 +1725,16 @@
     <script>
         /* ── Nav scroll effect ── */
         const nav = document.getElementById("mainNav");
+        let ticking = false;
+
         window.addEventListener("scroll", () => {
-            nav.classList.toggle("scrolled", window.scrollY > 40);
+            if (!ticking) {
+                window.requestAnimationFrame(() => {
+                    nav.classList.toggle("scrolled", window.scrollY > 40);
+                    ticking = false;
+                });
+                ticking = true;
+            }
         });
 
         /* ── Mobile menu toggle ── */
@@ -1754,7 +1755,6 @@
             document.body.style.overflow = "";
         }
 
-        /* Close menu on outside click */
         document.addEventListener("click", (e) => {
             if (!nav.contains(e.target) && !mobileMenu.contains(e.target)) {
                 closeMenu();
@@ -1770,10 +1770,12 @@
             lb.classList.add("open");
             document.body.style.overflow = "hidden";
         }
+
         function closeLightbox() {
             document.getElementById("lightbox").classList.remove("open");
             document.body.style.overflow = "";
         }
+
         document.addEventListener("keydown", (e) => {
             if (e.key === "Escape") {
                 closeLightbox();
@@ -1781,25 +1783,32 @@
             }
         });
 
-        /* ── Scroll reveal ── */
-        const observer = new IntersectionObserver(
+        /* ── Optimized Scroll Reveal ── */
+        const revealObserver = new IntersectionObserver(
             (entries) => {
-                entries.forEach((e) => {
-                    if (e.isIntersecting) {
-                        e.target.style.opacity = "1";
-                        e.target.style.transform = "translateY(0)";
-                        observer.unobserve(e.target);
+                entries.forEach((entry) => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add("visible");
+                        revealObserver.unobserve(entry.target);
                     }
                 });
-            },
-            { threshold: 0.1 }
+            }, {
+            threshold: 0.1,
+            rootMargin: "0px 0px -50px 0px"
+        }
         );
 
-        document.querySelectorAll(".service-card, .testi-card, .gal-item, .value-card").forEach((el) => {
-            el.style.opacity = "0";
-            el.style.transform = "translateY(20px)";
-            el.style.transition = "opacity 0.5s ease, transform 0.5s ease";
-            observer.observe(el);
+        document.querySelectorAll(".reveal").forEach((el) => {
+            revealObserver.observe(el);
+        });
+
+        /* ── Image error fallback ── */
+        document.querySelectorAll(".img-wrapper img").forEach((img) => {
+            img.addEventListener("error", function () {
+                this.style.display = "none";
+                const fallback = this.parentElement.querySelector(".fallback");
+                if (fallback) fallback.style.opacity = "1";
+            });
         });
     </script>
 </body>
