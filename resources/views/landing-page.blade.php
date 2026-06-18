@@ -3,6 +3,10 @@
 
 <head>
     <meta charset="UTF-8" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+    <link rel="manifest" href="/site.webmanifest">
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>ME FOR YOU Your Professional Companion</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -54,9 +58,7 @@
 
         img {
             display: block;
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
+            max-width: 100%;
         }
 
         a {
@@ -149,14 +151,6 @@
         }
 
         /* ─── IMAGE OPTIMIZATION ───────────────────────────────────── */
-        /*
-         * OPTIMIZATION FIXES:
-         * 1. Removed pseudo-elements (::before, ::after) that were causing layout thrashing
-         * 2. Added will-change: transform only where needed
-         * 3. Images now use <img> tags with loading="lazy" for better performance
-         * 4. Reduced unnecessary background-image re-rendering
-         * 5. Added image aspect-ratio to prevent layout shifts
-         */
         .img-wrapper {
             position: relative;
             overflow: hidden;
@@ -235,6 +229,9 @@
         }
 
         .nav-logo {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
             font-family: var(--font-display);
             font-size: 22px;
             font-weight: 600;
@@ -244,12 +241,24 @@
             z-index: 2;
         }
 
-        .nav.scrolled .nav-logo {
-            color: var(--ink);
+        .nav-logo__img {
+            width: 40px;
+            height: 40px;
+            object-fit: contain;
+            flex-shrink: 0;
         }
 
-        .nav-logo span {
+        .nav-logo__text {
+            line-height: 1;
+            color: inherit;
+        }
+
+        .nav-logo__text span {
             color: var(--gold);
+        }
+
+        .nav.scrolled .nav-logo {
+            color: var(--ink);
         }
 
         .nav-links {
@@ -1274,7 +1283,10 @@
     <!-- ═══════════ NAV ═══════════ -->
     <nav class="nav" id="mainNav">
         <div class="nav-inner">
-            <a href="#" class="nav-logo">ME <span>FOR</span> YOU</a>
+            <a href="#home" class="nav-logo" aria-label="ME FOR YOU home">
+                <img src="{{ asset('android-chrome-512x512.png') }}" alt="ME FOR YOU Logo" class="nav-logo__img" />
+                <span class="nav-logo__text">ME <span>FOR</span> YOU</span>
+            </a>
             <ul class="nav-links">
                 <li><a href="#about">About</a></li>
                 <li><a href="#services">Services</a></li>
@@ -1616,7 +1628,7 @@
                 <div class="testi-author">
                     <div class="testi-avatar">
                         <div class="img-wrapper">
-                            <img src="assets/testimonials/client-02.webp" alt="Jean-Pierre & Grace M." loading="lazy"
+                            <img src="assets/testimonials/client-01.webp" alt="Jean-Pierre & Grace M." loading="lazy"
                                  decoding="async" />
                             <div class="fallback">JG</div>
                         </div>
@@ -1637,7 +1649,7 @@
                 <div class="testi-author">
                     <div class="testi-avatar">
                         <div class="img-wrapper">
-                            <img src="assets/testimonials/client-03.webp" alt="David N." loading="lazy"
+                            <img src="assets/testimonials/client-01.webp" alt="David N." loading="lazy"
                                  decoding="async" />
                             <div class="fallback">DN</div>
                         </div>
