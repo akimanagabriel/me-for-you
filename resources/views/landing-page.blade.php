@@ -8,6 +8,28 @@
     <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
     <link rel="manifest" href="/site.webmanifest">
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description"
+          content="ME FOR YOU offers trusted housing, event management, and transport services in Kigali, Rwanda." />
+    <meta name="theme-color" content="#b87f3a" />
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:title" content="ME FOR YOU | Professional Companion for Housing, Events & Transport" />
+    <meta property="og:description"
+          content="From premium housing support to unforgettable events and reliable transport, ME FOR YOU helps you move through every milestone with confidence." />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://me-for-you.org" />
+    <meta property="og:image" content="https://me-for-you.org/android-chrome-512x512.png" />
+    <meta property="og:image:alt" content="ME FOR YOU logo" />
+    <meta property="og:site_name" content="ME FOR YOU" />
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="ME FOR YOU | Professional Companion for Housing, Events & Transport" />
+    <meta name="twitter:description"
+          content="Trusted housing, event management, and transport services in Kigali, Rwanda." />
+    <meta name="twitter:image" content="https://me-for-you.org/android-chrome-512x512.png" />
+    <meta name="twitter:image:alt" content="ME FOR YOU logo" />
+
     <title>ME FOR YOU Your Professional Companion</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
