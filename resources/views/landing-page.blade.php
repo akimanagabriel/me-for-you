@@ -21,14 +21,11 @@
             --sand-dark: #ede7d8;
             --white: #ffffff;
             --muted: #7a7268;
-
             --font-display: "Cormorant Garamond", Georgia, serif;
             --font-body: "Inter", system-ui, sans-serif;
-
             --radius-sm: 6px;
             --radius-md: 12px;
             --radius-lg: 20px;
-
             --max-w: 1200px;
             --section-py: 80px;
         }
@@ -142,9 +139,7 @@
             border-radius: var(--radius-sm);
             border: 1.5px solid rgba(255, 255, 255, 0.5);
             cursor: pointer;
-            transition:
-                border-color 0.2s,
-                background 0.2s;
+            transition: border-color 0.2s, background 0.2s;
         }
 
         .btn-outline:hover {
@@ -154,17 +149,39 @@
 
         /* ─── IMAGE PLACEHOLDER ────────────────────────────────────── */
         /*
-   * REPLACE THESE BACKGROUNDS with actual ME FOR YOU images.
-   * Each .img-* class corresponds to a file in the assets/ folder.
-   * Example:
-   *   .img-hero-1 { background-image: url('assets/housing/house-01.jpg'); }
-   *
-   * Download images from: https://www.instagram.com/meforyou_rw/
-   */
+         * HOW TO REPLACE IMAGES:
+         * 1. Download photos from https://www.instagram.com/meforyou_rw/
+         * 2. Save them into the assets/ folder structure below
+         * 3. The background-image URL on each class already points to the right path
+         * 4. Once the file exists, the placeholder pattern disappears automatically
+         *
+         * assets/
+         * ├── housing/   hero-house.jpg, property-01.jpg
+         * ├── events/    hero-event.png, event-01.png
+         * ├── transport/ hero-car.jpg, car-01.png
+         * ├── gallery/   wedding-01.png, corporate-01.png, house-02.jpg,
+         * │              event-decor-01.jpg, about-brand.png
+         * └── testimonials/ client-01.jpg, client-02.jpg, client-03.jpg
+         */
         .img-placeholder {
             position: relative;
-            background: var(--sand-dark);
-            overflow: hidden;
+            background-color: var(--sand-dark);
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+
+        /* Checkerboard label shown only when no background-image is loaded */
+        .img-placeholder::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: repeating-linear-gradient(45deg,
+                    transparent,
+                    transparent 10px,
+                    rgba(184, 153, 58, 0.06) 10px,
+                    rgba(184, 153, 58, 0.06) 20px);
+            pointer-events: none;
         }
 
         .img-placeholder::after {
@@ -174,117 +191,80 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 11px;
-            font-weight: 500;
-            letter-spacing: 0.1em;
+            font-family: var(--font-body);
+            font-size: 10px;
+            font-weight: 600;
+            letter-spacing: 0.12em;
             text-transform: uppercase;
-            color: var(--gold);
-            background: repeating-linear-gradient(45deg,
-                    transparent,
-                    transparent 10px,
-                    rgba(184, 153, 58, 0.04) 10px,
-                    rgba(184, 153, 58, 0.04) 20px);
+            color: var(--gold-dark);
+            text-align: center;
+            padding: 8px;
+            pointer-events: none;
         }
 
-        /* Hero images   replace with real photos */
+        /* ── Hero images ── */
         .img-hero-1 {
             background-image: url("assets/events/hero-event.png");
-            background-size: cover;
-            background-position: center;
         }
 
         .img-hero-2 {
             background-image: url("assets/housing/hero-house.jpg");
-            background-size: cover;
-            background-position: center;
         }
 
         .img-hero-3 {
             background-image: url("assets/transport/hero-car.jpg");
-            background-size: cover;
-            background-position: center;
         }
 
-        /* Service images */
+        /* ── Service images ── */
         .img-svc-house {
             background-image: url("assets/housing/property-01.jpg");
-            background-size: cover;
-            background-position: center;
         }
 
         .img-svc-event {
             background-image: url("assets/events/event-01.png");
-            background-size: cover;
-            background-position: center;
         }
 
         .img-svc-car {
             background-image: url("assets/transport/car-01.png");
-            background-size: cover;
-            background-position: center;
         }
 
-        /* Gallery images */
+        /* ── Gallery images ── */
         .img-gal-1 {
             background-image: url("assets/gallery/wedding-01.png");
-            background-size: cover;
-            background-position: center;
         }
 
         .img-gal-2 {
             background-image: url("assets/gallery/corporate-01.png");
-            background-size: cover;
-            background-position: center;
         }
 
         .img-gal-3 {
             background-image: url("assets/gallery/house-02.jpg");
-            background-size: cover;
-            background-position: center;
         }
 
         .img-gal-4 {
             background-image: url("assets/gallery/event-decor-01.jpg");
-            background-size: cover;
-            background-position: center;
         }
 
         .img-gal-5 {
             background-image: url("assets/transport/hero-car.jpg");
-            background-size: cover;
-            background-position: center;
         }
 
-        .img-gal-6 {
-            background-image: url("assets/gallery/team-01.jpg");
-            background-size: cover;
-            background-position: center;
-        }
-
-        /* About image */
+        /* ── About image ── */
         .img-about {
             background-image: url("assets/gallery/about-brand.png");
-            background-size: cover;
-            background-position: center;
         }
 
-        /* Testimonial avatars */
+        /* ── Testimonial avatars ── */
         .img-avatar-1 {
             background-image: url("assets/testimonials/client-01.jpg");
-            background-size: cover;
-            background-position: center;
         }
 
         .img-avatar-2 {
-            background-image: url("assets/testimonials/client-01.jpg");
-            background-size: cover;
-            background-position: center;
+            background-image: url("assets/testimonials/client-02.jpg");
         }
 
         .img-avatar-3 {
-            background-image: url("assets/testimonials/client-01.jpg");
-            background-size: cover;
-            background-position: center;
+            background-image: url("assets/testimonials/client-03.jpg");
         }
 
         /* ─── NAV ─────────────────────────────────────────────────── */
@@ -295,14 +275,13 @@
             right: 0;
             z-index: 100;
             padding: 0 24px;
-            transition:
-                background 0.3s,
-                box-shadow 0.3s;
+            transition: background 0.3s, box-shadow 0.3s;
         }
 
         .nav.scrolled {
             background: rgba(255, 255, 255, 0.96);
             backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
             box-shadow: 0 1px 0 rgba(0, 0, 0, 0.08);
         }
 
@@ -322,6 +301,7 @@
             color: var(--white);
             letter-spacing: 0.02em;
             transition: color 0.3s;
+            z-index: 2;
         }
 
         .nav.scrolled .nav-logo {
@@ -332,6 +312,7 @@
             color: var(--gold);
         }
 
+        /* Desktop links */
         .nav-links {
             display: flex;
             align-items: center;
@@ -359,18 +340,113 @@
             font-weight: 500;
             padding: 9px 20px;
             border-radius: var(--radius-sm);
-            background: var(--gold);
+            background: var(--gold) !important;
             color: var(--white) !important;
             transition: background 0.2s !important;
         }
 
         .nav-cta:hover {
             background: var(--gold-dark) !important;
-            color: var(--white) !important;
         }
 
-        .nav-menu-toggle {
+        /* Hamburger button */
+        .nav-hamburger {
             display: none;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            gap: 5px;
+            width: 40px;
+            height: 40px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 4px;
+            z-index: 2;
+        }
+
+        .nav-hamburger span {
+            display: block;
+            width: 24px;
+            height: 2px;
+            background: var(--white);
+            border-radius: 2px;
+            transition: background 0.3s, transform 0.3s, opacity 0.3s;
+        }
+
+        .nav.scrolled .nav-hamburger span {
+            background: var(--ink);
+        }
+
+        /* Hamburger → X animation */
+        .nav-hamburger.open span:nth-child(1) {
+            transform: translateY(7px) rotate(45deg);
+        }
+
+        .nav-hamburger.open span:nth-child(2) {
+            opacity: 0;
+            transform: scaleX(0);
+        }
+
+        .nav-hamburger.open span:nth-child(3) {
+            transform: translateY(-7px) rotate(-45deg);
+        }
+
+        /* Mobile drawer */
+        .nav-mobile {
+            display: none;
+            position: fixed;
+            top: 72px;
+            left: 0;
+            right: 0;
+            background: rgba(26, 23, 20, 0.97);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            padding: 0 24px;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.35s ease, padding 0.35s ease;
+            z-index: 99;
+        }
+
+        .nav-mobile.open {
+            max-height: 400px;
+            padding: 16px 24px 28px;
+        }
+
+        .nav-mobile a {
+            display: block;
+            font-size: 15px;
+            font-weight: 500;
+            color: rgba(255, 255, 255, 0.8);
+            padding: 13px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            letter-spacing: 0.03em;
+            transition: color 0.2s;
+        }
+
+        .nav-mobile a:last-child {
+            border-bottom: none;
+        }
+
+        .nav-mobile a:hover {
+            color: var(--gold-light);
+        }
+
+        .nav-mobile .nav-mobile-cta {
+            margin-top: 16px;
+            display: block;
+            text-align: center;
+            background: var(--gold);
+            color: var(--white) !important;
+            border-radius: var(--radius-sm);
+            padding: 13px 20px;
+            font-weight: 600;
+            border-bottom: none !important;
+        }
+
+        .nav-mobile .nav-mobile-cta:hover {
+            background: var(--gold-dark);
         }
 
         /* ─── HERO ────────────────────────────────────────────────── */
@@ -476,6 +552,7 @@
 
         .hero-img-top {
             position: relative;
+            overflow: hidden;
         }
 
         .hero-img-bottom {
@@ -498,9 +575,8 @@
         .hero-img-overlay {
             position: absolute;
             inset: 0;
-            background: linear-gradient(to bottom,
-                    transparent 60%,
-                    rgba(0, 0, 0, 0.3));
+            background: linear-gradient(to bottom, transparent 60%, rgba(0, 0, 0, 0.3));
+            pointer-events: none;
         }
 
         .hero-badge {
@@ -509,6 +585,7 @@
             left: 20px;
             background: rgba(255, 255, 255, 0.92);
             backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
             border-radius: var(--radius-sm);
             padding: 10px 14px;
             font-size: 11px;
@@ -532,8 +609,6 @@
             gap: 24px;
             text-align: center;
         }
-
-        .stat-item {}
 
         .stat-num {
             font-family: var(--font-display);
@@ -602,11 +677,6 @@
             border-left: 3px solid var(--gold);
         }
 
-        .value-icon {
-            font-size: 24px;
-            margin-bottom: 8px;
-        }
-
         .value-title {
             font-size: 14px;
             font-weight: 600;
@@ -646,9 +716,8 @@
             background: var(--white);
             border-radius: var(--radius-lg);
             overflow: hidden;
-            transition:
-                transform 0.25s,
-                box-shadow 0.25s;
+            transition: transform 0.25s, box-shadow 0.25s;
+            will-change: transform;
         }
 
         .service-card:hover {
@@ -666,6 +735,7 @@
             position: absolute;
             inset: 0;
             transition: transform 0.4s ease;
+            will-change: transform;
         }
 
         .service-card:hover .service-img-inner {
@@ -801,6 +871,7 @@
             position: absolute;
             inset: 0;
             transition: transform 0.4s ease;
+            will-change: transform;
         }
 
         .gal-item:hover .gal-bg {
@@ -810,9 +881,7 @@
         .gal-overlay {
             position: absolute;
             inset: 0;
-            background: linear-gradient(to top,
-                    rgba(26, 23, 20, 0.75) 0%,
-                    transparent 50%);
+            background: linear-gradient(to top, rgba(26, 23, 20, 0.75) 0%, transparent 50%);
             opacity: 0;
             transition: opacity 0.3s;
             display: flex;
@@ -901,6 +970,8 @@
             overflow: hidden;
             flex-shrink: 0;
             background: var(--ink-mid);
+            background-size: cover;
+            background-position: center;
         }
 
         .testi-name {
@@ -982,18 +1053,6 @@
             opacity: 0.9;
         }
 
-        .cta-contact-info {
-            font-size: 13px;
-            color: rgba(255, 255, 255, 0.7);
-            text-align: right;
-            line-height: 1.6;
-        }
-
-        .cta-contact-info a {
-            color: var(--white);
-            font-weight: 500;
-        }
-
         /* ─── FOOTER ───────────────────────────────────────────────── */
         .footer {
             background: var(--ink);
@@ -1049,9 +1108,7 @@
             justify-content: center;
             font-size: 14px;
             color: rgba(255, 255, 255, 0.6);
-            transition:
-                background 0.2s,
-                color 0.2s;
+            transition: background 0.2s, color 0.2s;
         }
 
         .footer-social a:hover {
@@ -1126,6 +1183,20 @@
 
         /* ─── RESPONSIVE ───────────────────────────────────────────── */
         @media (max-width: 900px) {
+
+            /* Show hamburger, hide desktop links */
+            .nav-hamburger {
+                display: flex;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .nav-mobile {
+                display: block;
+            }
+
             .hero {
                 grid-template-columns: 1fr;
                 min-height: auto;
@@ -1181,8 +1252,8 @@
             }
 
             .gal-item {
-                position: static;
-                height: 200px;
+                position: relative;
+                height: 180px;
             }
 
             .gal-item:nth-child(n) {
@@ -1209,10 +1280,6 @@
                 align-items: flex-start;
             }
 
-            .cta-contact-info {
-                text-align: left;
-            }
-
             .footer-top {
                 grid-template-columns: 1fr 1fr;
                 gap: 32px;
@@ -1223,9 +1290,45 @@
                 gap: 12px;
                 text-align: center;
             }
+        }
 
-            .nav-links {
-                display: none;
+        @media (max-width: 480px) {
+            .hero-left {
+                padding: 90px 20px 40px;
+            }
+
+            .hero-services {
+                gap: 16px;
+                flex-wrap: wrap;
+            }
+
+            .stats-inner {
+                grid-template-columns: 1fr 1fr;
+                gap: 16px;
+            }
+
+            .stat-divider {
+                border-left: none;
+            }
+
+            .about-values {
+                grid-template-columns: 1fr;
+            }
+
+            .gallery-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .gal-item {
+                height: 200px;
+            }
+
+            .cta-inner {
+                padding: 32px 20px;
+            }
+
+            .footer-top {
+                grid-template-columns: 1fr;
             }
         }
     </style>
@@ -1241,16 +1344,28 @@
                 <li><a href="#services">Services</a></li>
                 <li><a href="#gallery">Our Work</a></li>
                 <li><a href="#testimonials">Reviews</a></li>
-                <li>
-                    <a href="#contact" class="nav-cta">Get in Touch</a>
-                </li>
+                <li><a href="#contact" class="nav-cta">Get in Touch</a></li>
             </ul>
+            <!-- Hamburger toggle -->
+            <button class="nav-hamburger" id="navHamburger" aria-label="Open menu" aria-expanded="false">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
         </div>
     </nav>
 
+    <!-- Mobile drawer -->
+    <div class="nav-mobile" id="navMobile">
+        <a href="#about" onclick="closeMenu()">About</a>
+        <a href="#services" onclick="closeMenu()">Services</a>
+        <a href="#gallery" onclick="closeMenu()">Our Work</a>
+        <a href="#testimonials" onclick="closeMenu()">Reviews</a>
+        <a href="#contact" class="nav-mobile-cta" onclick="closeMenu()">Get in Touch</a>
+    </div>
+
     <!-- ═══════════ HERO ═══════════ -->
     <section class="hero" id="home">
-        <!-- Left panel -->
         <div class="hero-left">
             <p class="hero-tagline">Kigali, Rwanda</p>
             <h1 class="hero-title">Your Professional<br /><em>Companion</em></h1>
@@ -1271,24 +1386,21 @@
 
         <div class="hero-right">
             <div class="hero-img-top">
-                <div class="img-placeholder img-hero-1" data-label="Events" style="position: absolute; inset: 0"></div>
+                <div class="img-placeholder img-hero-1" data-label="Events Photo" style="position:absolute;inset:0;">
+                </div>
                 <div class="hero-img-overlay"></div>
-                <div class="hero-badge">events</div>
+                <div class="hero-badge">Events</div>
             </div>
             <div class="hero-img-bottom">
                 <div class="hero-img-cell">
-                    <div class="img-placeholder img-hero-2" data-label="Housing" style="position: absolute; inset: 0">
-                    </div>
-                    <div class="hero-badge" style="font-size: 10px">
-                        Housing
-                    </div>
+                    <div class="img-placeholder img-hero-2" data-label="Housing Photo"
+                         style="position:absolute;inset:0;"></div>
+                    <div class="hero-badge" style="font-size:10px;">Housing</div>
                 </div>
                 <div class="hero-img-cell">
-                    <div class="img-placeholder img-hero-3" data-label="Transport" style="position: absolute; inset: 0">
-                    </div>
-                    <div class="hero-badge" style="font-size: 10px">
-                        Transport
-                    </div>
+                    <div class="img-placeholder img-hero-3" data-label="Transport Photo"
+                         style="position:absolute;inset:0;"></div>
+                    <div class="hero-badge" style="font-size:10px;">Transport</div>
                 </div>
             </div>
         </div>
@@ -1319,14 +1431,10 @@
     <!-- ═══════════ ABOUT ═══════════ -->
     <section class="about" id="about">
         <div class="about-inner">
-            <div style="position: relative">
+            <div style="position:relative;">
                 <div class="about-img-wrap">
-                    <!-- Replace with: <img src="assets/gallery/about-brand.jpg" alt="ME FOR YOU team" /> -->
-                    <div class="img-placeholder img-about" data-label="" style="
-                position: absolute;
-                inset: 0;
-                border-radius: var(--radius-lg);
-              "></div>
+                    <div class="img-placeholder img-about" data-label="Brand / Team Photo"
+                         style="position:absolute;inset:0;border-radius:var(--radius-lg);"></div>
                 </div>
                 <div class="about-accent"></div>
             </div>
@@ -1334,43 +1442,34 @@
             <div>
                 <p class="section-label">Who We Are</p>
                 <h2 class="section-title">One Company,<br /><em>Every Need</em></h2>
-                <p class="section-body" style="margin-top: 16px">
+                <p class="section-body" style="margin-top:16px;">
                     ME FOR YOU is a Kigali-based professional services company dedicated
                     to empowering individuals and businesses through personalized,
                     expert services tailored to their unique needs. We believe that
                     great experiences start with great partnerships.
                 </p>
-                <p class="section-body" style="margin-top: 16px">
+                <p class="section-body" style="margin-top:16px;">
                     Whether you're finding your next home, planning a memorable
                     celebration, or need reliable transport we handle it with
                     professionalism, affordability, and care.
                 </p>
-
                 <div class="about-values">
                     <div class="value-card">
                         <div class="value-title">Professionalism</div>
-                        <div class="value-desc">
-                            Expert service at every touchpoint, from first call to final
-                            delivery.
+                        <div class="value-desc">Expert service at every touchpoint, from first call to final delivery.
                         </div>
                     </div>
                     <div class="value-card">
                         <div class="value-title">Affordability</div>
-                        <div class="value-desc">
-                            Premium quality without premium prices value you can trust.
-                        </div>
+                        <div class="value-desc">Premium quality without premium prices value you can trust.</div>
                     </div>
                     <div class="value-card">
                         <div class="value-title">Trustworthiness</div>
-                        <div class="value-desc">
-                            We show up, deliver, and stand behind everything we promise.
-                        </div>
+                        <div class="value-desc">We show up, deliver, and stand behind everything we promise.</div>
                     </div>
                     <div class="value-card">
                         <div class="value-title">Personal Touch</div>
-                        <div class="value-desc">
-                            Every client receives bespoke attention and tailored solutions.
-                        </div>
+                        <div class="value-desc">Every client receives bespoke attention and tailored solutions.</div>
                     </div>
                 </div>
             </div>
@@ -1382,20 +1481,16 @@
         <div class="services-header">
             <div>
                 <p class="section-label">What We Offer</p>
-                <h2 class="section-title">
-                    Housing, Events<br />& <em>Transport</em>
-                </h2>
+                <h2 class="section-title">Housing, Events<br />& <em>Transport</em></h2>
             </div>
             <a href="#contact" class="btn-primary">Get a Free Quote</a>
         </div>
 
         <div class="services-grid">
-
             <!-- Events -->
             <div class="service-card">
                 <div class="service-img">
-                    <div class="service-img-inner img-placeholder img-svc-event"></div>
-                    <!-- Replace with: <div class="service-img-inner"><img src="assets/events/event-01.jpg" alt="ME FOR YOU event setup" /></div> -->
+                    <div class="service-img-inner img-placeholder img-svc-event" data-label="Event Photo"></div>
                     <div class="service-chip">Events</div>
                 </div>
                 <div class="service-body">
@@ -1415,12 +1510,10 @@
                 </div>
             </div>
 
-
             <!-- Housing -->
             <div class="service-card">
                 <div class="service-img">
-                    <div class="service-img-inner img-placeholder img-svc-house"></div>
-                    <!-- Replace with: <div class="service-img-inner"><img src="assets/housing/property-01.jpg" alt="ME FOR YOU housing property" /></div> -->
+                    <div class="service-img-inner img-placeholder img-svc-house" data-label="Housing Photo"></div>
                     <div class="service-chip">Housing</div>
                 </div>
                 <div class="service-body">
@@ -1440,13 +1533,10 @@
                 </div>
             </div>
 
-
-
             <!-- Transport -->
             <div class="service-card">
                 <div class="service-img">
-                    <div class="service-img-inner img-placeholder img-svc-car"></div>
-                    <!-- Replace with: <div class="service-img-inner"><img src="assets/transport/car-01.jpg" alt="ME FOR YOU rental car" /></div> -->
+                    <div class="service-img-inner img-placeholder img-svc-car" data-label="Car Photo"></div>
                     <div class="service-chip">Transport</div>
                 </div>
                 <div class="service-body">
@@ -1480,50 +1570,25 @@
         </div>
 
         <div class="gallery-grid">
-            <!-- Gallery item 1   Wedding -->
-            <div class="gal-item" onclick="
-            openLightbox('assets/gallery/wedding-01.png', 'Wedding Ceremony')
-          ">
-                <div class="gal-bg img-placeholder img-gal-1">
-                </div>
+            <div class="gal-item" onclick="openLightbox('assets/gallery/wedding-01.png','Wedding Ceremony')">
+                <div class="gal-bg img-placeholder img-gal-1" data-label="Wedding"></div>
                 <div class="gal-overlay"><span class="gal-label">Wedding</span></div>
             </div>
-            <!-- Gallery item 2   Corporate -->
-            <div class="gal-item" onclick="
-            openLightbox('assets/gallery/corporate-01.png', 'Corporate Event')
-          ">
-                <div class="gal-bg img-placeholder img-gal-2">
-                </div>
-                <div class="gal-overlay">
-                    <span class="gal-label">Corporate Event</span>
-                </div>
+            <div class="gal-item" onclick="openLightbox('assets/gallery/corporate-01.png','Corporate Event')">
+                <div class="gal-bg img-placeholder img-gal-2" data-label="Corporate Event"></div>
+                <div class="gal-overlay"><span class="gal-label">Corporate Event</span></div>
             </div>
-            <!-- Gallery item 3   House (tall) -->
-            <div class="gal-item" onclick="
-            openLightbox('assets/gallery/house-02.jpg', 'Property Listing')
-          ">
-                <div class="gal-bg img-placeholder img-gal-3"></div>
+            <div class="gal-item" onclick="openLightbox('assets/gallery/house-02.jpg','Property Listing')">
+                <div class="gal-bg img-placeholder img-gal-3" data-label="Housing"></div>
                 <div class="gal-overlay"><span class="gal-label">Housing</span></div>
             </div>
-            <!-- Gallery item 4   Décor -->
-            <div class="gal-item" onclick="
-            openLightbox(
-              'assets/gallery/event-decor-01.jpg',
-              'Event Decoration',
-            )
-          ">
-                <div class="gal-bg img-placeholder img-gal-4">
-                </div>
-                <div class="gal-overlay">
-                    <span class="gal-label">Event Décor</span>
-                </div>
+            <div class="gal-item" onclick="openLightbox('assets/gallery/event-decor-01.jpg','Event Decoration')">
+                <div class="gal-bg img-placeholder img-gal-4" data-label="Event Décor"></div>
+                <div class="gal-overlay"><span class="gal-label">Event Décor</span></div>
             </div>
-            <!-- Gallery item 5   Car -->
-            <div class="gal-item" onclick="openLightbox('assets/transport/hero-car.jpg', 'Fleet Vehicle')">
-                <div class="gal-bg img-placeholder img-gal-5"></div>
-                <div class="gal-overlay">
-                    <span class="gal-label">Transport</span>
-                </div>
+            <div class="gal-item" onclick="openLightbox('assets/transport/hero-car.jpg','Fleet Vehicle')">
+                <div class="gal-bg img-placeholder img-gal-5" data-label="Transport"></div>
+                <div class="gal-overlay"><span class="gal-label">Transport</span></div>
             </div>
         </div>
     </section>
@@ -1538,12 +1603,8 @@
     <section class="testimonials" id="testimonials">
         <div class="testimonials-header">
             <div>
-                <p class="section-label" style="color: var(--gold-light)">
-                    Client Reviews
-                </p>
-                <h2 class="section-title">
-                    What Our Clients <em style="color: var(--gold-light)">Say</em>
-                </h2>
+                <p class="section-label" style="color:var(--gold-light);">Client Reviews</p>
+                <h2 class="section-title">What Our Clients <em style="color:var(--gold-light);">Say</em></h2>
             </div>
             <a href="https://www.instagram.com/meforyou_rw/" target="_blank" rel="noopener" class="btn-outline">Follow
                 Us on Instagram</a>
@@ -1552,10 +1613,9 @@
         <div class="testimonials-grid">
             <div class="testi-card">
                 <div class="testi-stars">★★★★★</div>
-                <p class="testi-quote line-clamp-3">
+                <p class="testi-quote">
                     "ME FOR YOU found us the perfect apartment in Kigali within a week.
-                    The whole process was smooth, transparent, and stress-free. Highly
-                    recommended!"
+                    The whole process was smooth, transparent, and stress-free. Highly recommended!"
                 </p>
                 <div class="testi-author">
                     <div class="testi-avatar img-placeholder img-avatar-1" data-label="AK"></div>
@@ -1568,7 +1628,7 @@
 
             <div class="testi-card">
                 <div class="testi-stars">★★★★★</div>
-                <p class="testi-quote line-clamp-3">
+                <p class="testi-quote">
                     "Our wedding was absolutely magical. The décor, coordination, and
                     transport everything was handled perfectly. Thank you ME FOR YOU!"
                 </p>
@@ -1583,10 +1643,9 @@
 
             <div class="testi-card">
                 <div class="testi-stars">★★★★★</div>
-                <p class="testi-quote line-clamp-3">
+                <p class="testi-quote">
                     "We used ME FOR YOU for our company's annual conference transport.
-                    Professional drivers, clean vehicles, and always on time.
-                    Outstanding service."
+                    Professional drivers, clean vehicles, and always on time. Outstanding service."
                 </p>
                 <div class="testi-author">
                     <div class="testi-avatar img-placeholder img-avatar-3" data-label="DN"></div>
@@ -1603,16 +1662,15 @@
     <section class="cta-banner" id="contact">
         <div class="cta-inner">
             <div>
-                <h2 class="cta-title">
-                    Ready to experience<br /><em>the ME FOR YOU difference?</em>
-                </h2>
+                <h2 class="cta-title">Ready to experience<br /><em>the ME FOR YOU difference?</em></h2>
                 <p class="cta-sub">
                     Housing, Events & Transport all in one place.<br />
                     Let us be your professional companion.
                 </p>
             </div>
             <div class="cta-actions">
-                <a href="https://wa.me/+250788202209" class="btn-cta-white" target="_blank">Get in Touch →</a>
+                <a href="https://wa.me/+250788202209" class="btn-cta-white" target="_blank" rel="noopener">Get in Touch
+                    →</a>
             </div>
         </div>
     </section>
@@ -1638,7 +1696,6 @@
                                 <circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none" />
                             </svg>
                         </a>
-
                     </div>
                 </div>
 
@@ -1666,20 +1723,45 @@
                 </div>
             </div>
             <div class="footer-bottom">
-                <span>©{{ date("Y") }} ME FOR YOU. All rights reserved.</span>
+                <span>© 2025 ME FOR YOU. All rights reserved.</span>
                 <span>Empowering Rwanda, one service at a time.</span>
             </div>
         </div>
     </footer>
 
     <script>
-        /* Nav scroll effect */
+        /* ── Nav scroll effect ── */
         const nav = document.getElementById("mainNav");
         window.addEventListener("scroll", () => {
             nav.classList.toggle("scrolled", window.scrollY > 40);
         });
 
-        /* Lightbox */
+        /* ── Mobile menu toggle ── */
+        const hamburger = document.getElementById("navHamburger");
+        const mobileMenu = document.getElementById("navMobile");
+
+        hamburger.addEventListener("click", () => {
+            const isOpen = mobileMenu.classList.toggle("open");
+            hamburger.classList.toggle("open", isOpen);
+            hamburger.setAttribute("aria-expanded", isOpen);
+            document.body.style.overflow = isOpen ? "hidden" : "";
+        });
+
+        function closeMenu() {
+            mobileMenu.classList.remove("open");
+            hamburger.classList.remove("open");
+            hamburger.setAttribute("aria-expanded", "false");
+            document.body.style.overflow = "";
+        }
+
+        /* Close menu on outside click */
+        document.addEventListener("click", (e) => {
+            if (!nav.contains(e.target) && !mobileMenu.contains(e.target)) {
+                closeMenu();
+            }
+        });
+
+        /* ── Lightbox ── */
         function openLightbox(src, alt) {
             const lb = document.getElementById("lightbox");
             const img = document.getElementById("lightboxImg");
@@ -1693,30 +1775,32 @@
             document.body.style.overflow = "";
         }
         document.addEventListener("keydown", (e) => {
-            if (e.key === "Escape") closeLightbox();
+            if (e.key === "Escape") {
+                closeLightbox();
+                closeMenu();
+            }
         });
 
-        /* Smooth appear on scroll */
+        /* ── Scroll reveal ── */
         const observer = new IntersectionObserver(
             (entries) => {
                 entries.forEach((e) => {
                     if (e.isIntersecting) {
                         e.target.style.opacity = "1";
                         e.target.style.transform = "translateY(0)";
+                        observer.unobserve(e.target);
                     }
                 });
             },
-            { threshold: 0.12 },
+            { threshold: 0.1 }
         );
 
-        document
-            .querySelectorAll(".service-card, .testi-card, .gal-item, .value-card")
-            .forEach((el) => {
-                el.style.opacity = "0";
-                el.style.transform = "translateY(20px)";
-                el.style.transition = "opacity 0.5s ease, transform 0.5s ease";
-                observer.observe(el);
-            });
+        document.querySelectorAll(".service-card, .testi-card, .gal-item, .value-card").forEach((el) => {
+            el.style.opacity = "0";
+            el.style.transform = "translateY(20px)";
+            el.style.transition = "opacity 0.5s ease, transform 0.5s ease";
+            observer.observe(el);
+        });
     </script>
 </body>
 
