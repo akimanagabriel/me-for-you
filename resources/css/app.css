@@ -1,9 +1,218 @@
-@import 'tailwindcss';
+@import "tailwindcss";
 
 @source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
 @source '../../storage/framework/views/*.php';
+@source '../views/**/*.blade.php';
+@source '../js/**/*.js';
+
+@plugin "daisyui" {
+    themes: meforyou --default;
+}
+
+/* ─── MeForYou custom theme (from landing-page.blade.php) ─── */
+@plugin "daisyui/theme" {
+    name: "meforyou";
+    default: true;
+    prefersdark: false;
+    color-scheme: light;
+
+    --color-primary: oklch(62% 0.12 68);
+    --color-primary-content: oklch(100% 0 0);
+    --color-secondary: oklch(50% 0.11 68);
+    --color-secondary-content: oklch(100% 0 0);
+    --color-accent: oklch(72% 0.09 68);
+    --color-accent-content: oklch(18% 0.02 55);
+    --color-neutral: oklch(18% 0.02 55);
+    --color-neutral-content: oklch(95% 0.015 85);
+    --color-base-100: oklch(100% 0 0);
+    --color-base-200: oklch(95% 0.015 85);
+    --color-base-300: oklch(91% 0.025 85);
+    --color-base-content: oklch(18% 0.02 55);
+    --color-info: oklch(62% 0.18 250);
+    --color-info-content: oklch(100% 0 0);
+    --color-success: oklch(65% 0.2 145);
+    --color-success-content: oklch(100% 0 0);
+    --color-warning: oklch(75% 0.15 75);
+    --color-warning-content: oklch(18% 0.02 55);
+    --color-error: oklch(60% 0.22 25);
+    --color-error-content: oklch(100% 0 0);
+
+    --radius-selector: 0.375rem;
+    --radius-field: 0.375rem;
+    --radius-box: 0.75rem;
+}
 
 @theme {
-    --font-sans: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
-        'Segoe UI Symbol', 'Noto Color Emoji';
+    --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+    --font-display: "Cormorant Garamond", Georgia, serif;
+
+    --color-gold: #b87f3a;
+    --color-gold-light: #d49d6a;
+    --color-gold-dark: #8a6e22;
+    --color-ink: #1a1714;
+    --color-ink-mid: #3d3830;
+    --color-sand: #f5f0e8;
+    --color-sand-dark: #ede7d8;
+    --color-muted: #7a7268;
+
+    --radius-sm: 6px;
+    --radius-md: 12px;
+    --radius-lg: 20px;
+}
+
+/* ─── Form controls ─── */
+@layer components {
+    .input,
+    .select,
+    .textarea,
+    .input-bordered,
+    .select-bordered,
+    .textarea-bordered {
+        border: 1px solid var(--color-base-300) !important;
+        border-radius: var(--radius-field) !important;
+        background-color: var(--color-base-100) !important;
+        color: var(--color-base-content) !important;
+        box-shadow: inset 0 1px 2px rgb(0 0 0 / 0.03) !important;
+    }
+
+    .input:focus,
+    .select:focus,
+    .textarea:focus,
+    .input-bordered:focus,
+    .select-bordered:focus,
+    .textarea-bordered:focus {
+        border-color: var(--color-primary) !important;
+        outline: none !important;
+        box-shadow: 0 0 0 3px rgb(184 127 58 / 0.2) !important;
+    }
+}
+
+/* ─── Typography utilities ─── */
+.font-display {
+    font-family: var(--font-display);
+}
+
+/* ─── Section patterns (landing page) ─── */
+.section-label {
+    @apply text-[11px] font-semibold uppercase tracking-[0.18em] text-primary mb-3;
+}
+
+.section-title {
+    @apply font-display text-[clamp(2rem,4vw,3.25rem)] font-semibold leading-tight text-base-content;
+}
+
+.section-title em {
+    @apply italic text-primary;
+}
+
+.section-body {
+    @apply text-base text-[var(--color-muted)] leading-relaxed max-w-[540px];
+}
+
+/* ─── Landing page hero & gallery (complex layouts) ─── */
+.hero-grid {
+    @apply relative min-h-screen grid grid-cols-1 lg:grid-cols-2 overflow-hidden;
+}
+
+.hero-left-panel {
+    @apply relative z-[2] bg-neutral flex flex-col justify-center px-8 pt-28 pb-20 lg:px-16 lg:pt-32;
+}
+
+.hero-right-panel {
+    @apply grid grid-rows-[3fr_2fr] lg:min-h-screen;
+}
+
+.gallery-mosaic {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: 280px 200px;
+    gap: 12px;
+}
+
+@media (max-width: 900px) {
+    .gallery-mosaic {
+        grid-template-columns: repeat(2, 1fr);
+        grid-template-rows: auto;
+    }
+
+    .gallery-mosaic .gal-item {
+        height: 180px;
+    }
+
+    .gallery-mosaic .gal-item:nth-child(n) {
+        grid-column: auto;
+        grid-row: auto;
+    }
+}
+
+@media (max-width: 480px) {
+    .gallery-mosaic {
+        grid-template-columns: 1fr;
+    }
+
+    .gallery-mosaic .gal-item {
+        height: 200px;
+    }
+}
+
+.gallery-mosaic .gal-item:nth-child(1) {
+    grid-column: 1;
+    grid-row: 1;
+}
+.gallery-mosaic .gal-item:nth-child(2) {
+    grid-column: 2;
+    grid-row: 1;
+}
+.gallery-mosaic .gal-item:nth-child(3) {
+    grid-column: 3;
+    grid-row: 1 / 3;
+}
+.gallery-mosaic .gal-item:nth-child(4) {
+    grid-column: 1;
+    grid-row: 2;
+}
+.gallery-mosaic .gal-item:nth-child(5) {
+    grid-column: 2;
+    grid-row: 2;
+}
+
+/* ─── Scroll reveal ─── */
+.reveal {
+    @apply opacity-0 translate-y-5 transition-all duration-600;
+}
+
+.reveal.visible {
+    @apply opacity-100 translate-y-0;
+}
+
+/* ─── Image wrapper ─── */
+.img-wrapper {
+    @apply relative overflow-hidden bg-base-300 w-full h-full;
+}
+
+.img-wrapper img {
+    @apply w-full h-full object-cover block transition-transform duration-400;
+}
+
+.img-wrapper:hover img {
+    @apply scale-105;
+}
+
+/* ─── Alpine cloak ─── */
+[x-cloak] {
+    display: none !important;
+}
+
+/* ─── Admin sidebar active state ─── */
+.admin-nav-link {
+    @apply flex items-center gap-3 px-4 py-2.5 rounded-lg text-sm font-medium text-base-content/70 transition-colors hover:bg-base-200 hover:text-primary;
+}
+
+.admin-nav-link.active {
+    @apply bg-primary/10 text-primary font-semibold;
+}
+
+/* ─── Toast container ─── */
+.toast-container {
+    @apply fixed top-4 right-4 z-[9999] flex flex-col gap-2;
 }

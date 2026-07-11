@@ -1305,16 +1305,16 @@
     <!-- ═══════════ NAV ═══════════ -->
     <nav class="nav" id="mainNav">
         <div class="nav-inner">
-            <a href="#home" class="nav-logo" aria-label="ME FOR YOU home">
+            <a href="/home" class="nav-logo" aria-label="ME FOR YOU home">
                 <img src="{{ asset('android-chrome-512x512.png') }}" alt="ME FOR YOU Logo" class="nav-logo__img" />
                 <span class="nav-logo__text">ME <span>FOR</span> YOU</span>
             </a>
             <ul class="nav-links">
-                <li><a href="#about">About</a></li>
+                <li><a href="/about">About</a></li>
                 <li><a href="#services">Services</a></li>
-                <li><a href="#gallery">Our Work</a></li>
+                <li><a href="/gallery">Our Work</a></li>
                 <li><a href="#testimonials">Reviews</a></li>
-                <li><a href="#contact" class="nav-cta">Get in Touch</a></li>
+                <li><a href="/contact" class="nav-cta">Get in Touch</a></li>
             </ul>
             <button class="nav-hamburger" id="navHamburger" aria-label="Open menu" aria-expanded="false">
                 <span></span>
