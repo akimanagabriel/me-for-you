@@ -6,6 +6,7 @@ use App\Http\Controllers\CarController;
 use App\Http\Controllers\EventController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\HouseController;
+use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\PublicPageController;
 use Illuminate\Support\Facades\Route;
 
@@ -36,6 +37,25 @@ Route::middleware('auth')->group(function () {
         Route::resource('cars', CarController::class)->names('cars');
         Route::resource('events', EventController::class)->names('events');
 
+
+        // Profile routes
+        Route::prefix('profile')->name('profile.')->group(function () {
+            Route::get('/', [ProfileController::class, 'index'])->name('index');
+            Route::get('/edit', [ProfileController::class, 'edit'])->name('edit');
+            Route::put('/update', [ProfileController::class, 'update'])->name('update');
+
+            // Password routes
+            Route::get('/password', [ProfileController::class, 'passwordForm'])->name('password');
+            Route::put('/password', [ProfileController::class, 'updatePassword'])->name('password.update');
+
+            // Email routes
+            Route::get('/email', [ProfileController::class, 'emailForm'])->name('email');
+            Route::put('/email', [ProfileController::class, 'updateEmail'])->name('email.update');
+
+            // Account deletion
+            Route::delete('/delete', [ProfileController::class, 'destroy'])->name('delete');
+        });
+
         $resources = [
             'categories',
             'locations',
@@ -49,7 +69,6 @@ Route::middleware('auth')->group(function () {
             'faqs',
             'subscribers',
             'activity-logs',
-            'profile',
         ];
 
         foreach ($resources as $resource) {
