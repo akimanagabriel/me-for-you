@@ -45,24 +45,7 @@
                     <span class="h-4 w-4 rounded-full text-white bg-primary indicator-item">3</span>
                 </div>
             </div>
-            <div tabindex="0"
-                 class="dropdown-content z-[1] menu p-2 shadow-lg bg-base-100 rounded-box w-80 border border-base-300 mt-2">
-                <div class="px-3 py-2 border-b border-base-300">
-                    <p class="font-semibold text-sm">Notifications</p>
-                </div>
-                <ul class="max-h-64 overflow-y-auto">
-                    <li><a class="text-sm py-2"><x-ui.badge variant="warning" size="xs">New</x-ui.badge> Pending inquiry
-                            from John D.</a></li>
-                    <li><a class="text-sm py-2"><x-ui.badge variant="info" size="xs">Booking</x-ui.badge> New house
-                            booking request</a></li>
-                    <li><a class="text-sm py-2"><x-ui.badge variant="success" size="xs">Review</x-ui.badge> New 5-star
-                            review received</a></li>
-                </ul>
-                <div class="px-3 py-2 border-t border-base-300">
-                    <a href="{{ route('admin.inquiries.index') }}" class="text-xs text-primary hover:underline">View all
-                        notifications</a>
-                </div>
-            </div>
+            
         </div>
 
         {{-- User menu --}}

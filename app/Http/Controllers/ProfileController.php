@@ -150,12 +150,9 @@ class ProfileController extends Controller
             'email_verified_at' => null, // Require re-verification
         ]);
 
-        // Send email verification notification
-        // $user->sendEmailVerificationNotification();
-
         return redirect()
             ->route('admin.profile.index')
-            ->with('success', 'Email updated successfully. Please verify your new email address.');
+            ->with('success', 'Email updated successfully.');
     }
 
     /**
