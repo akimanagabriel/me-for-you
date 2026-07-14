@@ -3,6 +3,7 @@
 use App\Http\Controllers\Admin\AdminPageController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\CarController;
+use App\Http\Controllers\EventController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\HouseController;
 use App\Http\Controllers\PublicPageController;
@@ -33,9 +34,9 @@ Route::middleware('auth')->group(function () {
 
         Route::resource("houses", HouseController::class)->names("houses");
         Route::resource('cars', CarController::class)->names('cars');
+        Route::resource('events', EventController::class)->names('events');
 
         $resources = [
-            'events',
             'categories',
             'locations',
             'bookings',
