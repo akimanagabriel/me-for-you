@@ -63,7 +63,7 @@ class HouseSeeder extends Seeder
                 HouseImage::create([
                     'house_id' => $house->id,
                     'image_path' => "https://picsum.photos/seed/{$seed}-{$j}/1200/800",
-                    'alt_text' => $house->title . ' — photo ' . ($j + 1),
+                    'alt_text' => $house->title . '   photo ' . ($j + 1),
                     'is_cover' => $j === 0,
                     'sort_order' => $j,
                 ]);

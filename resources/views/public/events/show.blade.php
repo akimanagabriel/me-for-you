@@ -17,7 +17,7 @@
                 <h1 class="font-display text-4xl font-semibold">{{ $event['title'] }}</h1>
 
                 <p class="section-body mt-6 max-w-none">
-                    Our {{ strtolower($event['category']) }} package covers venue coordination, décor, catering liaison, transport, and full on-day management — tailored to your vision and budget.
+                    Our {{ strtolower($event['category']) }} package covers venue coordination, décor, catering liaison, transport, and full on-day management   tailored to your vision and budget.
                 </p>
             </div>
 

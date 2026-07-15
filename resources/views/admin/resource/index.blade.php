@@ -51,7 +51,7 @@
             <tr>
                 <td class="font-medium">{{ $item['name'] }}</td>
                 @foreach ($extraKeys as $key)
-                    <td>{{ $item[$key] ?? '—' }}</td>
+                    <td>{{ $item[$key] ?? ' ' }}</td>
                 @endforeach
                 <td>
                     <x-ui.badge :variant="$statusVariants[$item['status']] ?? 'neutral'">
@@ -73,7 +73,7 @@
 </x-ui.card>
 
 <x-ui.modal id="create-modal" title="Add New {{ Str::singular($pageTitle) }}">
-    <p class="text-sm text-base-content/60">This form is a placeholder — connect it to a controller action to persist new records.</p>
+    <p class="text-sm text-base-content/60">This form is a placeholder   connect it to a controller action to persist new records.</p>
     <x-slot:actions>
         <form method="dialog"><x-ui.button variant="ghost">Cancel</x-ui.button></form>
         <x-ui.button variant="primary">Save</x-ui.button>

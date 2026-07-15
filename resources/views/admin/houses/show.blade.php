@@ -100,7 +100,7 @@
             @endif
         </x-ui.card>
 
-        <x-ui.modal id="gallery-modal-{{ $house->id }}" title="{{ $house->title }} — Photos" size="xl">
+        <x-ui.modal id="gallery-modal-{{ $house->id }}" title="{{ $house->title }}   Photos" size="xl">
             <div class="grid grid-cols-2 sm:grid-cols-3 gap-3 max-h-[70vh] overflow-y-auto">
                 @foreach ($slides as $image)
                     <div class="relative rounded-box overflow-hidden aspect-[4/3]">
@@ -169,11 +169,11 @@
                 </div>
                 <div class="flex justify-between">
                     <dt class="text-base-content/60">Size</dt>
-                    <dd class="font-medium">{{ $house->size_sqm ? number_format($house->size_sqm) . ' sqm' : '—' }}</dd>
+                    <dd class="font-medium">{{ $house->size_sqm ? number_format($house->size_sqm) . ' sqm' : ' ' }}</dd>
                 </div>
                 <div class="flex justify-between">
                     <dt class="text-base-content/60">Address</dt>
-                    <dd class="font-medium text-right">{{ $house->address ?? '—' }}</dd>
+                    <dd class="font-medium text-right">{{ $house->address ?? ' ' }}</dd>
                 </div>
             </dl>
         </x-ui.card>
@@ -195,7 +195,7 @@
                 </div>
                 <div class="flex justify-between">
                     <dt class="text-base-content/60">Published</dt>
-                    <dd class="font-medium">{{ $house->published_at?->format('M j, Y') ?? '—' }}</dd>
+                    <dd class="font-medium">{{ $house->published_at?->format('M j, Y') ?? ' ' }}</dd>
                 </div>
                 <div class="flex justify-between">
                     <dt class="text-base-content/60">Last Updated</dt>

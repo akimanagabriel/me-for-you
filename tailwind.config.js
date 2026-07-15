@@ -1,5 +1,5 @@
 /**
- * MeForYou Design System — Tailwind + DaisyUI theme reference.
+ * MeForYou Design System   Tailwind + DaisyUI theme reference.
  *
  * Tailwind CSS v4 + DaisyUI 5 configure themes in resources/css/app.css.
  * This file documents the meforyou theme extracted from landing-page.blade.php.

@@ -1,12 +1,12 @@
 <!doctype html>
-<html lang="en">
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 
 <head>
     <meta charset="UTF-8" />
-    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
-    <link rel="manifest" href="/site.webmanifest">
+    <link rel="apple-touch-icon" sizes="180x180" href="{{ asset('apple-touch-icon.png') }}">
+    <link rel="icon" type="image/png" sizes="32x32" href="{{ asset('favicon-32x32.png') }}">
+    <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('favicon-16x16.png') }}">
+    <link rel="manifest" href="{{ asset('site.webmanifest') }}">
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description"
           content="ME FOR YOU offers trusted housing, event management, and transport services in Kigali, Rwanda." />
@@ -17,8 +17,8 @@
     <meta property="og:description"
           content="From premium housing support to unforgettable events and reliable transport, ME FOR YOU helps you move through every milestone with confidence." />
     <meta property="og:type" content="website" />
-    <meta property="og:url" content="https://me-for-you.org" />
-    <meta property="og:image" content="https://me-for-you.org/android-chrome-512x512.png" />
+    <meta property="og:url" content="{{ url('/') }}" />
+    <meta property="og:image" content="{{ asset('android-chrome-512x512.png') }}" />
     <meta property="og:image:alt" content="ME FOR YOU logo" />
     <meta property="og:site_name" content="ME FOR YOU" />
 
@@ -27,7 +27,7 @@
     <meta name="twitter:title" content="ME FOR YOU | Professional Companion for Housing, Events & Transport" />
     <meta name="twitter:description"
           content="Trusted housing, event management, and transport services in Kigali, Rwanda." />
-    <meta name="twitter:image" content="https://me-for-you.org/android-chrome-512x512.png" />
+    <meta name="twitter:image" content="{{ asset('android-chrome-512x512.png') }}" />
     <meta name="twitter:image:alt" content="ME FOR YOU logo" />
 
     <title>ME FOR YOU Your Professional Companion</title>
@@ -35,6 +35,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Inter:wght@300;400;500;600&display=swap"
           rel="stylesheet" />
+
     <style>
         /* ─── TOKENS ──────────────────────────────────────────────── */
         :root {
@@ -194,7 +195,6 @@
             transform: scale(1.05);
         }
 
-        /* Fallback placeholder (visible while images load) */
         .img-wrapper .fallback {
             position: absolute;
             inset: 0;
@@ -1305,16 +1305,16 @@
     <!-- ═══════════ NAV ═══════════ -->
     <nav class="nav" id="mainNav">
         <div class="nav-inner">
-            <a href="/home" class="nav-logo" aria-label="ME FOR YOU home">
+            <a href="{{ route('home') }}" class="nav-logo" aria-label="ME FOR YOU home">
                 <img src="{{ asset('android-chrome-512x512.png') }}" alt="ME FOR YOU Logo" class="nav-logo__img" />
                 <span class="nav-logo__text">ME <span>FOR</span> YOU</span>
             </a>
             <ul class="nav-links">
-                <li><a href="/about">About</a></li>
-                <li><a href="#services">Services</a></li>
-                <li><a href="/gallery">Our Work</a></li>
-                <li><a href="#testimonials">Reviews</a></li>
-                <li><a href="/contact" class="nav-cta">Get in Touch</a></li>
+                <li><a href="{{ route('about') }}">About</a></li>
+                <li><a href="{{ route('services.events') }}">Services</a></li>
+                <li><a href="{{ route('gallery') }}">Our Work</a></li>
+                <li><a href="{{ route('faq') }}">FAQ</a></li>
+                <li><a href="{{ route('contact') }}" class="nav-cta">Get in Touch</a></li>
             </ul>
             <button class="nav-hamburger" id="navHamburger" aria-label="Open menu" aria-expanded="false">
                 <span></span>
@@ -1326,11 +1326,11 @@
 
     <!-- Mobile drawer -->
     <div class="nav-mobile" id="navMobile">
-        <a href="#about" onclick="closeMenu()">About</a>
-        <a href="#services" onclick="closeMenu()">Services</a>
-        <a href="#gallery" onclick="closeMenu()">Our Work</a>
-        <a href="#testimonials" onclick="closeMenu()">Reviews</a>
-        <a href="#contact" class="nav-mobile-cta" onclick="closeMenu()">Get in Touch</a>
+        <a href="{{ route('about') }}" onclick="closeMenu()">About</a>
+        <a href="{{ route('services.events') }}" onclick="closeMenu()">Services</a>
+        <a href="{{ route('gallery') }}" onclick="closeMenu()">Our Work</a>
+        <a href="{{ route('faq') }}" onclick="closeMenu()">FAQ</a>
+        <a href="{{ route('contact') }}" class="nav-mobile-cta" onclick="closeMenu()">Get in Touch</a>
     </div>
 
     <!-- ═══════════ HERO ═══════════ -->
@@ -1343,41 +1343,51 @@
                 what matters most. One trusted partner for every milestone.
             </p>
             <div class="hero-actions">
-                <a href="#services" class="btn-primary">Explore Services</a>
-                <a href="#contact" class="btn-outline">Book a Consultation</a>
+                <a href="{{ route('services.events') }}" class="btn-primary">Explore Services</a>
+                <a href="{{ route('contact') }}" class="btn-outline">Book a Consultation</a>
             </div>
             <div class="hero-services">
-                <span class="hero-service-pill">Housing</span>
-                <span class="hero-service-pill">Events</span>
-                <span class="hero-service-pill">Transport</span>
+                <a href="{{ route('services.housing') }}" class="hero-service-pill" style="text-decoration:none;">Housing</a>
+                <a href="{{ route('services.events') }}" class="hero-service-pill" style="text-decoration:none;">Events</a>
+                <a href="{{ route('services.transport') }}" class="hero-service-pill" style="text-decoration:none;">Transport</a>
             </div>
         </div>
 
         <div class="hero-right">
             <div class="hero-img-top">
                 <div class="img-wrapper">
-                    <img src="assets/events/hero-event.webp" alt="ME FOR YOU Events" loading="lazy" decoding="async" />
+                    @if($featuredEvents->isNotEmpty())
+                        <img src="{{ $featuredEvents->first()->cover_image ?? asset('assets/events/hero-event.webp') }}" alt="ME FOR YOU Events" loading="lazy" decoding="async" />
+                    @else
+                        <img src="{{ asset('assets/events/hero-event.webp') }}" alt="ME FOR YOU Events" loading="lazy" decoding="async" />
+                    @endif
                     <div class="fallback">Events Photo</div>
                 </div>
                 <div class="hero-img-overlay"></div>
-                <div class="hero-badge">Events</div>
+                <a href="{{ route('services.events') }}" class="hero-badge" style="text-decoration:none;">Events</a>
             </div>
             <div class="hero-img-bottom">
                 <div class="hero-img-cell">
                     <div class="img-wrapper">
-                        <img src="assets/housing/hero-house.webp" alt="ME FOR YOU Housing" loading="lazy"
-                             decoding="async" />
+                        @if($featuredHouses->isNotEmpty())
+                            <img src="{{ $featuredHouses->first()->cover_image ?? asset('assets/housing/hero-house.webp') }}" alt="ME FOR YOU Housing" loading="lazy" decoding="async" />
+                        @else
+                            <img src="{{ asset('assets/housing/hero-house.webp') }}" alt="ME FOR YOU Housing" loading="lazy" decoding="async" />
+                        @endif
                         <div class="fallback">Housing Photo</div>
                     </div>
-                    <div class="hero-badge" style="font-size:10px;">Housing</div>
+                    <a href="{{ route('services.housing') }}" class="hero-badge" style="font-size:10px; text-decoration:none;">Housing</a>
                 </div>
                 <div class="hero-img-cell">
                     <div class="img-wrapper">
-                        <img src="assets/transport/hero-car.webp" alt="ME FOR YOU Transport" loading="lazy"
-                             decoding="async" />
+                        @if($featuredCars->isNotEmpty())
+                            <img src="{{ $featuredCars->first()->cover_image ?? asset('assets/transport/hero-car.webp') }}" alt="ME FOR YOU Transport" loading="lazy" decoding="async" />
+                        @else
+                            <img src="{{ asset('assets/transport/hero-car.webp') }}" alt="ME FOR YOU Transport" loading="lazy" decoding="async" />
+                        @endif
                         <div class="fallback">Transport Photo</div>
                     </div>
-                    <div class="hero-badge" style="font-size:10px;">Transport</div>
+                    <a href="{{ route('services.transport') }}" class="hero-badge" style="font-size:10px; text-decoration:none;">Transport</a>
                 </div>
             </div>
         </div>
@@ -1387,19 +1397,19 @@
     <div class="stats-bar">
         <div class="stats-inner">
             <div class="stat-item">
-                <div class="stat-num">200+</div>
+                <div class="stat-num">{{ number_format($stats['clients']) }}+</div>
                 <div class="stat-label">Happy Clients</div>
             </div>
             <div class="stat-item stat-divider">
-                <div class="stat-num">50+</div>
+                <div class="stat-num">{{ number_format($stats['properties']) }}+</div>
                 <div class="stat-label">Properties Listed</div>
             </div>
             <div class="stat-item stat-divider">
-                <div class="stat-num">100+</div>
+                <div class="stat-num">{{ number_format($stats['events']) }}+</div>
                 <div class="stat-label">Events Managed</div>
             </div>
             <div class="stat-item stat-divider">
-                <div class="stat-num">5★</div>
+                <div class="stat-num">{{ $stats['rating'] }}</div>
                 <div class="stat-label">Client Rating</div>
             </div>
         </div>
@@ -1411,8 +1421,7 @@
             <div style="position:relative;">
                 <div class="about-img-wrap">
                     <div class="img-wrapper">
-                        <img src="assets/gallery/about-brand.webp" alt="ME FOR YOU team" loading="lazy"
-                             decoding="async" />
+                        <img src="{{ asset('assets/gallery/about-brand.webp') }}" alt="ME FOR YOU team" loading="lazy" decoding="async" />
                         <div class="fallback">Brand / Team Photo</div>
                     </div>
                 </div>
@@ -1436,8 +1445,7 @@
                 <div class="about-values">
                     <div class="value-card reveal">
                         <div class="value-title">Professionalism</div>
-                        <div class="value-desc">Expert service at every touchpoint, from first call to final delivery.
-                        </div>
+                        <div class="value-desc">Expert service at every touchpoint, from first call to final delivery.</div>
                     </div>
                     <div class="value-card reveal">
                         <div class="value-title">Affordability</div>
@@ -1463,7 +1471,7 @@
                 <p class="section-label">What We Offer</p>
                 <h2 class="section-title">Housing, Events<br />& <em>Transport</em></h2>
             </div>
-            <a href="#contact" class="btn-primary">Get a Free Quote</a>
+            <a href="{{ route('contact') }}" class="btn-primary">Get a Free Quote</a>
         </div>
 
         <div class="services-grid">
@@ -1471,8 +1479,11 @@
             <div class="service-card reveal">
                 <div class="service-img">
                     <div class="img-wrapper">
-                        <img src="assets/events/event-01.webp" alt="ME FOR YOU Event Management" loading="lazy"
-                             decoding="async" />
+                        @if($featuredEvents->isNotEmpty())
+                            <img src="{{ $featuredEvents->first()->cover_image ?? asset('assets/events/event-01.webp') }}" alt="ME FOR YOU Event Management" loading="lazy" decoding="async" />
+                        @else
+                            <img src="{{ asset('assets/events/event-01.webp') }}" alt="ME FOR YOU Event Management" loading="lazy" decoding="async" />
+                        @endif
                         <div class="fallback">Event Photo</div>
                     </div>
                     <div class="service-chip">Events</div>
@@ -1490,7 +1501,7 @@
                         <li class="service-feature">Décor & venue setup</li>
                         <li class="service-feature">Catering coordination</li>
                     </ul>
-                    <a href="#contact" class="service-link">Plan Your Event</a>
+                    <a href="{{ route('services.events') }}" class="service-link">Plan Your Event</a>
                 </div>
             </div>
 
@@ -1498,8 +1509,11 @@
             <div class="service-card reveal">
                 <div class="service-img">
                     <div class="img-wrapper">
-                        <img src="assets/housing/property-01.webp" alt="ME FOR YOU Housing Services" loading="lazy"
-                             decoding="async" />
+                        @if($featuredHouses->isNotEmpty())
+                            <img src="{{ $featuredHouses->first()->cover_image ?? asset('assets/housing/property-01.webp') }}" alt="ME FOR YOU Housing Services" loading="lazy" decoding="async" />
+                        @else
+                            <img src="{{ asset('assets/housing/property-01.webp') }}" alt="ME FOR YOU Housing Services" loading="lazy" decoding="async" />
+                        @endif
                         <div class="fallback">Housing Photo</div>
                     </div>
                     <div class="service-chip">Housing</div>
@@ -1517,7 +1531,7 @@
                         <li class="service-feature">Rental management</li>
                         <li class="service-feature">Relocation assistance</li>
                     </ul>
-                    <a href="#contact" class="service-link">Find a Property</a>
+                    <a href="{{ route('services.housing') }}" class="service-link">Find a Property</a>
                 </div>
             </div>
 
@@ -1525,8 +1539,11 @@
             <div class="service-card reveal">
                 <div class="service-img">
                     <div class="img-wrapper">
-                        <img src="assets/transport/car-01.webp" alt="ME FOR YOU Transport Services" loading="lazy"
-                             decoding="async" />
+                        @if($featuredCars->isNotEmpty())
+                            <img src="{{ $featuredCars->first()->cover_image ?? asset('assets/transport/car-01.webp') }}" alt="ME FOR YOU Transport Services" loading="lazy" decoding="async" />
+                        @else
+                            <img src="{{ asset('assets/transport/car-01.webp') }}" alt="ME FOR YOU Transport Services" loading="lazy" decoding="async" />
+                        @endif
                         <div class="fallback">Car Photo</div>
                     </div>
                     <div class="service-chip">Transport</div>
@@ -1544,7 +1561,7 @@
                         <li class="service-feature">Event transport & chauffeur</li>
                         <li class="service-feature">Corporate fleet services</li>
                     </ul>
-                    <a href="#contact" class="service-link">Book a Vehicle</a>
+                    <a href="{{ route('services.transport') }}" class="service-link">Book a Vehicle</a>
                 </div>
             </div>
         </div>
@@ -1562,43 +1579,15 @@
         </div>
 
         <div class="gallery-grid">
-            <div class="gal-item reveal" onclick="openLightbox('assets/gallery/wedding-01.webp','Wedding Ceremony')">
-                <div class="img-wrapper">
-                    <img src="assets/gallery/wedding-01.webp" alt="Wedding Ceremony" loading="lazy" decoding="async" />
-                    <div class="fallback">Wedding</div>
+            @foreach($galleryImages as $index => $image)
+                <div class="gal-item reveal" onclick="openLightbox('{{ $image['src'] }}','{{ $image['alt'] }}')">
+                    <div class="img-wrapper">
+                        <img src="{{ $image['src'] }}" alt="{{ $image['alt'] }}" loading="lazy" decoding="async" />
+                        <div class="fallback">{{ $image['label'] }}</div>
+                    </div>
+                    <div class="gal-overlay"><span class="gal-label">{{ $image['label'] }}</span></div>
                 </div>
-                <div class="gal-overlay"><span class="gal-label">Wedding</span></div>
-            </div>
-            <div class="gal-item reveal" onclick="openLightbox('assets/gallery/corporate-01.webp','Corporate Event')">
-                <div class="img-wrapper">
-                    <img src="assets/gallery/corporate-01.webp" alt="Corporate Event" loading="lazy" decoding="async" />
-                    <div class="fallback">Corporate Event</div>
-                </div>
-                <div class="gal-overlay"><span class="gal-label">Corporate Event</span></div>
-            </div>
-            <div class="gal-item reveal" onclick="openLightbox('assets/gallery/house-02.webp','Property Listing')">
-                <div class="img-wrapper">
-                    <img src="assets/gallery/house-02.webp" alt="Property Listing" loading="lazy" decoding="async" />
-                    <div class="fallback">Housing</div>
-                </div>
-                <div class="gal-overlay"><span class="gal-label">Housing</span></div>
-            </div>
-            <div class="gal-item reveal"
-                 onclick="openLightbox('assets/gallery/event-decor-01.webp','Event Decoration')">
-                <div class="img-wrapper">
-                    <img src="assets/gallery/event-decor-01.webp" alt="Event Decoration" loading="lazy"
-                         decoding="async" />
-                    <div class="fallback">Event Décor</div>
-                </div>
-                <div class="gal-overlay"><span class="gal-label">Event Décor</span></div>
-            </div>
-            <div class="gal-item reveal" onclick="openLightbox('assets/transport/hero-car.webp','Fleet Vehicle')">
-                <div class="img-wrapper">
-                    <img src="assets/transport/hero-car.webp" alt="Fleet Vehicle" loading="lazy" decoding="async" />
-                    <div class="fallback">Transport</div>
-                </div>
-                <div class="gal-overlay"><span class="gal-label">Transport</span></div>
-            </div>
+            @endforeach
         </div>
     </section>
 
@@ -1615,73 +1604,83 @@
                 <p class="section-label" style="color:var(--gold-light);">Client Reviews</p>
                 <h2 class="section-title">What Our Clients <em style="color:var(--gold-light);">Say</em></h2>
             </div>
-            <a href="https://www.instagram.com/meforyou_rw/" target="_blank" rel="noopener" class="btn-outline">Follow
-                Us on Instagram</a>
+            <a href="https://www.instagram.com/meforyou_rw/" target="_blank" rel="noopener" class="btn-outline">Follow Us on Instagram</a>
         </div>
 
         <div class="testimonials-grid">
-            <div class="testi-card reveal">
-                <div class="testi-stars">★★★★★</div>
-                <p class="testi-quote">
-                    "ME FOR YOU found us the perfect apartment in Kigali within a week.
-                    The whole process was smooth, transparent, and stress-free. Highly recommended!"
-                </p>
-                <div class="testi-author">
-                    <div class="testi-avatar">
-                        <div class="img-wrapper">
-                            <img src="assets/testimonials/client-01.webp" alt="Amina K." loading="lazy"
-                                 decoding="async" />
-                            <div class="fallback">AK</div>
+            @forelse($testimonials as $testimonial)
+                <div class="testi-card reveal">
+                    <div class="testi-stars">
+                        @for($i = 0; $i < $testimonial['stars']; $i++)
+                            ★
+                        @endfor
+                    </div>
+                    <p class="testi-quote">"{{ $testimonial['quote'] }}"</p>
+                    <div class="testi-author">
+                        <div class="testi-avatar">
+                            <div class="img-wrapper">
+                                <img src="{{ asset($testimonial['avatar']) }}" alt="{{ $testimonial['name'] }}" loading="lazy" decoding="async" />
+                                <div class="fallback">{{ substr($testimonial['name'], 0, 2) }}</div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="testi-name">{{ $testimonial['name'] }}</div>
+                            <div class="testi-role">{{ $testimonial['role'] }}</div>
                         </div>
                     </div>
-                    <div>
-                        <div class="testi-name">Amina K.</div>
-                        <div class="testi-role">Housing client, Kigali</div>
+                </div>
+            @empty
+                <div class="testi-card reveal">
+                    <div class="testi-stars">★★★★★</div>
+                    <p class="testi-quote">"ME FOR YOU found us the perfect apartment in Kigali within a week. The whole process was smooth, transparent, and stress-free. Highly recommended!"</p>
+                    <div class="testi-author">
+                        <div class="testi-avatar">
+                            <div class="img-wrapper">
+                                <img src="{{ asset('assets/testimonials/client-01.webp') }}" alt="Amina K." loading="lazy" decoding="async" />
+                                <div class="fallback">AK</div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="testi-name">Amina K.</div>
+                            <div class="testi-role">Housing client, Kigali</div>
+                        </div>
                     </div>
                 </div>
-            </div>
 
-            <div class="testi-card reveal">
-                <div class="testi-stars">★★★★★</div>
-                <p class="testi-quote">
-                    "Our wedding was absolutely magical. The décor, coordination, and
-                    transport everything was handled perfectly. Thank you ME FOR YOU!"
-                </p>
-                <div class="testi-author">
-                    <div class="testi-avatar">
-                        <div class="img-wrapper">
-                            <img src="assets/testimonials/client-01.webp" alt="Jean-Pierre & Grace M." loading="lazy"
-                                 decoding="async" />
-                            <div class="fallback">JG</div>
+                <div class="testi-card reveal">
+                    <div class="testi-stars">★★★★★</div>
+                    <p class="testi-quote">"Our wedding was absolutely magical. The décor, coordination, and transport everything was handled perfectly. Thank you ME FOR YOU!"</p>
+                    <div class="testi-author">
+                        <div class="testi-avatar">
+                            <div class="img-wrapper">
+                                <img src="{{ asset('assets/testimonials/client-02.webp') }}" alt="Jean-Pierre & Grace M." loading="lazy" decoding="async" />
+                                <div class="fallback">JG</div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="testi-name">Jean-Pierre & Grace M.</div>
+                            <div class="testi-role">Wedding clients</div>
                         </div>
                     </div>
-                    <div>
-                        <div class="testi-name">Jean-Pierre & Grace M.</div>
-                        <div class="testi-role">Wedding clients</div>
-                    </div>
                 </div>
-            </div>
 
-            <div class="testi-card reveal">
-                <div class="testi-stars">★★★★★</div>
-                <p class="testi-quote">
-                    "We used ME FOR YOU for our company's annual conference transport.
-                    Professional drivers, clean vehicles, and always on time. Outstanding service."
-                </p>
-                <div class="testi-author">
-                    <div class="testi-avatar">
-                        <div class="img-wrapper">
-                            <img src="assets/testimonials/client-01.webp" alt="David N." loading="lazy"
-                                 decoding="async" />
-                            <div class="fallback">DN</div>
+                <div class="testi-card reveal">
+                    <div class="testi-stars">★★★★★</div>
+                    <p class="testi-quote">"We used ME FOR YOU for our company's annual conference transport. Professional drivers, clean vehicles, and always on time. Outstanding service."</p>
+                    <div class="testi-author">
+                        <div class="testi-avatar">
+                            <div class="img-wrapper">
+                                <img src="{{ asset('assets/testimonials/client-03.webp') }}" alt="David N." loading="lazy" decoding="async" />
+                                <div class="fallback">DN</div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="testi-name">David N.</div>
+                            <div class="testi-role">Corporate client, Kigali</div>
                         </div>
                     </div>
-                    <div>
-                        <div class="testi-name">David N.</div>
-                        <div class="testi-role">Corporate client, Kigali</div>
-                    </div>
                 </div>
-            </div>
+            @endforelse
         </div>
     </section>
 
@@ -1696,8 +1695,7 @@
                 </p>
             </div>
             <div class="cta-actions">
-                <a href="https://wa.me/+250788202209" class="btn-cta-white" target="_blank" rel="noopener">Get in Touch
-                    →</a>
+                <a href="https://wa.me/+250788202209" class="btn-cta-white" target="_blank" rel="noopener">Get in Touch →</a>
             </div>
         </div>
     </section>
@@ -1714,10 +1712,8 @@
                         across the country.
                     </p>
                     <div class="footer-social">
-                        <a href="https://www.instagram.com/meforyou_rw/" target="_blank" rel="noopener"
-                           aria-label="Instagram">
-                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                 stroke-width="2">
+                        <a href="https://www.instagram.com/meforyou_rw/" target="_blank" rel="noopener" aria-label="Instagram">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                                 <rect x="2" y="2" width="20" height="20" rx="5" />
                                 <circle cx="12" cy="12" r="4" />
                                 <circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none" />
@@ -1728,29 +1724,30 @@
 
                 <div class="footer-col">
                     <p class="footer-col-title">Services</p>
-                    <a href="#services">Housing</a>
-                    <a href="#services">Event Management</a>
-                    <a href="#services">Transport</a>
-                    <a href="#services">Corporate Packages</a>
+                    <a href="{{ route('services.housing') }}">Housing</a>
+                    <a href="{{ route('services.events') }}">Event Management</a>
+                    <a href="{{ route('services.transport') }}">Transport</a>
+                    <a href="{{ route('contact') }}">Corporate Packages</a>
                 </div>
 
                 <div class="footer-col">
                     <p class="footer-col-title">Company</p>
-                    <a href="#about">About Us</a>
-                    <a href="#gallery">Our Work</a>
-                    <a href="#testimonials">Reviews</a>
-                    <a href="#contact">Contact</a>
+                    <a href="{{ route('about') }}">About Us</a>
+                    <a href="{{ route('gallery') }}">Our Work</a>
+                    <a href="{{ route('faq') }}">FAQ</a>
+                    <a href="{{ route('contact') }}">Contact</a>
                 </div>
 
                 <div class="footer-col">
                     <p class="footer-col-title">Contact</p>
                     <a href="https://www.instagram.com/meforyou_rw/" target="_blank" rel="noopener">@meforyou_rw</a>
                     <a href="mailto:info@me-for-you.org">info@me-for-you.org</a>
+                    <a href="tel:+250788202209">+250 788 202 209</a>
                     <a>Kigali, Rwanda</a>
                 </div>
             </div>
             <div class="footer-bottom">
-                <span>© 2025 ME FOR YOU. All rights reserved.</span>
+                <span>© {{ date('Y') }} ME FOR YOU. All rights reserved.</span>
                 <span>Empowering Rwanda, one service at a time.</span>
             </div>
         </div>
@@ -1827,9 +1824,9 @@
                     }
                 });
             }, {
-            threshold: 0.1,
-            rootMargin: "0px 0px -50px 0px"
-        }
+                threshold: 0.1,
+                rootMargin: "0px 0px -50px 0px"
+            }
         );
 
         document.querySelectorAll(".reveal").forEach((el) => {
@@ -1838,7 +1835,7 @@
 
         /* ── Image error fallback ── */
         document.querySelectorAll(".img-wrapper img").forEach((img) => {
-            img.addEventListener("error", function () {
+            img.addEventListener("error", function() {
                 this.style.display = "none";
                 const fallback = this.parentElement.querySelector(".fallback");
                 if (fallback) fallback.style.opacity = "1";

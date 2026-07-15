@@ -105,7 +105,7 @@
             @endif
         </x-ui.card>
 
-        <x-ui.modal id="gallery-modal-{{ $car->id }}" title="{{ $car->title }} — Photos" size="xl">
+        <x-ui.modal id="gallery-modal-{{ $car->id }}" title="{{ $car->title }}   Photos" size="xl">
             <div class="grid grid-cols-2 sm:grid-cols-3 gap-3 max-h-[70vh] overflow-y-auto">
                 @foreach ($slides as $image)
                     <div class="relative rounded-box overflow-hidden aspect-[4/3]">
@@ -184,7 +184,7 @@
                 </div>
                 <div class="flex justify-between">
                     <dt class="text-base-content/60">Engine</dt>
-                    <dd class="font-medium">{{ $car->engine_capacity ? number_format($car->engine_capacity, 1) . 'L' : '—' }}</dd>
+                    <dd class="font-medium">{{ $car->engine_capacity ? number_format($car->engine_capacity, 1) . 'L' : ' ' }}</dd>
                 </div>
                 <div class="flex justify-between">
                     <dt class="text-base-content/60">Seats / Doors</dt>
@@ -192,7 +192,7 @@
                 </div>
                 <div class="flex justify-between">
                     <dt class="text-base-content/60">Color</dt>
-                    <dd class="font-medium">{{ $car->color ?? '—' }}</dd>
+                    <dd class="font-medium">{{ $car->color ?? ' ' }}</dd>
                 </div>
             </dl>
         </x-ui.card>
@@ -206,7 +206,7 @@
                 </div>
                 <div class="flex justify-between">
                     <dt class="text-base-content/60">VIN</dt>
-                    <dd class="font-mono text-xs bg-base-200 px-2 py-0.5 rounded">{{ $car->vin ?? '—' }}</dd>
+                    <dd class="font-mono text-xs bg-base-200 px-2 py-0.5 rounded">{{ $car->vin ?? ' ' }}</dd>
                 </div>
                 <div class="flex justify-between">
                     <dt class="text-base-content/60">Owner</dt>

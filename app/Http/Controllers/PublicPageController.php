@@ -2,125 +2,324 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Car;
+use App\Models\Event;
+use App\Models\House;
+use Illuminate\View\View;
+
 class PublicPageController extends Controller
 {
-    public function houses()
+    /**
+     * Display the housing page with real data.
+     */
+    public function houses(): View
     {
+        $houses = House::where('status', '!=', 'unavailable')
+            ->latest()
+            ->paginate(12);
+
+        $featuredHouses = House::where('is_featured', true)
+            ->where('status', 'available')
+            ->latest()
+            ->take(6)
+            ->get();
+
+        $stats = [
+            'total' => House::count(),
+            'available' => House::where('status', 'available')->count(),
+            'rented' => House::where('status', 'rented')->count(),
+            'cities' => House::select('city')->distinct()->count(),
+        ];
+
         return view('public.houses.index', [
             'pageTitle' => 'Housing Services',
-            'houses' => $this->sampleHouses(),
+            'houses' => $houses,
+            'featuredHouses' => $featuredHouses,
+            'stats' => $stats,
         ]);
     }
 
-    public function houseShow(string $slug)
+    /**
+     * Display a single house detail.
+     */
+    public function houseShow(string $slug): View
     {
-        $house = collect($this->sampleHouses())->firstWhere('slug', $slug);
+        $house = House::where('slug', $slug)->firstOrFail();
 
-        abort_unless($house, 404);
+        // Increment view count
+        $house->increment('views_count');
+
+        $relatedHouses = House::where('id', '!=', $house->id)
+            ->where('city', $house->city)
+            ->where('status', 'available')
+            ->latest()
+            ->take(4)
+            ->get();
 
         return view('public.houses.show', [
-            'pageTitle' => $house['title'],
+            'pageTitle' => $house->title,
             'house' => $house,
+            'relatedHouses' => $relatedHouses,
         ]);
     }
 
-    public function cars()
+    /**
+     * Display the cars/transport page with real data.
+     */
+    public function cars(): View
     {
+        $cars = Car::where('status', '!=', 'unavailable')
+            ->latest()
+            ->paginate(12);
+
+        $featuredCars = Car::where('is_featured', true)
+            ->where('status', 'available')
+            ->latest()
+            ->take(6)
+            ->get();
+
+        $stats = [
+            'total' => Car::count(),
+            'available' => Car::where('status', 'available')->count(),
+            'reserved' => Car::where('status', 'reserved')->count(),
+            'types' => Car::select('body_type')->distinct()->count(),
+        ];
+
         return view('public.cars.index', [
             'pageTitle' => 'Transport Services',
-            'cars' => $this->sampleCars(),
+            'cars' => $cars,
+            'featuredCars' => $featuredCars,
+            'stats' => $stats,
         ]);
     }
 
-    public function carShow(string $slug)
+    /**
+     * Display a single car detail.
+     */
+    public function carShow(string $slug): View
     {
-        $car = collect($this->sampleCars())->firstWhere('slug', $slug);
+        $car = Car::where('slug', $slug)->firstOrFail();
 
-        abort_unless($car, 404);
+        // Increment view count
+        $car->increment('views_count');
+
+        $relatedCars = Car::where('id', '!=', $car->id)
+            ->where('make', $car->make)
+            ->where('status', 'available')
+            ->latest()
+            ->take(4)
+            ->get();
 
         return view('public.cars.show', [
-            'pageTitle' => $car['title'],
+            'pageTitle' => $car->title,
             'car' => $car,
+            'relatedCars' => $relatedCars,
         ]);
     }
 
-    public function events()
+    /**
+     * Display the events page with real data.
+     */
+    public function events(): View
     {
+        $upcomingEvents = Event::where('status', 'active')
+            ->where('event_date', '>=', now())
+            ->orderBy('event_date', 'asc')
+            ->paginate(9);
+
+        $featuredEvents = Event::where('is_featured', true)
+            ->where('status', 'active')
+            ->latest()
+            ->take(6)
+            ->get();
+
+        $pastEvents = Event::where('status', 'completed')
+            ->orderBy('event_date', 'desc')
+            ->take(6)
+            ->get();
+
+        $stats = [
+            'total' => Event::count(),
+            'upcoming' => Event::where('status', 'active')->where('event_date', '>=', now())->count(),
+            'completed' => Event::where('status', 'completed')->count(),
+            'categories' => Event::select('category')->distinct()->count(),
+        ];
+
         return view('public.events.index', [
             'pageTitle' => 'Event Management',
-            'events' => $this->sampleEvents(),
+            'upcomingEvents' => $upcomingEvents,
+            'featuredEvents' => $featuredEvents,
+            'pastEvents' => $pastEvents,
+            'stats' => $stats,
         ]);
     }
 
-    public function eventShow(string $slug)
+    /**
+     * Display a single event detail.
+     */
+    public function eventShow(string $slug): View
     {
-        $event = collect($this->sampleEvents())->firstWhere('slug', $slug);
+        $event = Event::where('slug', $slug)->firstOrFail();
 
-        abort_unless($event, 404);
+        // Increment view count
+        $event->increment('views_count');
+
+        $relatedEvents = Event::where('id', '!=', $event->id)
+            ->where('category', $event->category)
+            ->where('status', 'active')
+            ->latest()
+            ->take(4)
+            ->get();
 
         return view('public.events.show', [
-            'pageTitle' => $event['title'],
+            'pageTitle' => $event->title,
             'event' => $event,
+            'relatedEvents' => $relatedEvents,
         ]);
     }
 
-    public function about()
+    /**
+     * Display the about page.
+     */
+    public function about(): View
     {
-        return view('public.about', ['pageTitle' => 'About Us']);
+        $stats = [
+            'clients' => House::count() + Car::count() + Event::count(),
+            'properties' => House::count(),
+            'events' => Event::count(),
+            'vehicles' => Car::count(),
+        ];
+
+        return view('public.about', [
+            'pageTitle' => 'About Us',
+            'stats' => $stats,
+        ]);
     }
 
-    public function contact()
+    /**
+     * Display the contact page.
+     */
+    public function contact(): View
     {
-        return view('public.contact', ['pageTitle' => 'Contact Us']);
+        return view('public.contact', [
+            'pageTitle' => 'Contact Us',
+        ]);
     }
 
-    public function gallery()
+    /**
+     * Display the gallery page.
+     */
+    /**
+     * Display the gallery page.
+     */
+    public function gallery(): View
     {
-        return view('public.gallery', ['pageTitle' => 'Our Work']);
+        // Get images from all categories
+        $houseImages = House::whereNotNull('cover_image')
+            ->where('status', 'available')
+            ->latest()
+            ->take(8)
+            ->get()
+            ->map(function ($item) {
+                return [
+                    'src' => $item->cover_image,
+                    'alt' => $item->title,
+                    'category' => 'housing',
+                    'featured' => $item->is_featured ?? false,
+                ];
+            });
+
+        $eventImages = Event::whereNotNull('cover_image')
+            ->where('status', 'active')
+            ->latest()
+            ->take(8)
+            ->get()
+            ->map(function ($item) {
+                return [
+                    'src' => $item->cover_image,
+                    'alt' => $item->title,
+                    'category' => 'events',
+                    'featured' => $item->is_featured ?? false,
+                ];
+            });
+
+        $carImages = Car::whereNotNull('cover_image')
+            ->where('status', 'available')
+            ->latest()
+            ->take(8)
+            ->get()
+            ->map(function ($item) {
+                return [
+                    'src' => $item->cover_image,
+                    'alt' => $item->title,
+                    'category' => 'transport',
+                    'featured' => $item->is_featured ?? false,
+                ];
+            });
+
+        // Merge and shuffle all images
+        $images = $houseImages->merge($eventImages)->merge($carImages)->shuffle();
+
+        return view('public.gallery', [
+            'pageTitle' => 'Our Work',
+            'images' => $images,
+        ]);
     }
 
-    public function faq()
+    /**
+     * Display the FAQ page.
+     */
+    public function faq(): View
     {
+        // Get real FAQs from database or use defaults
+        $faqs = $this->getFaqs();
+
         return view('public.faq', [
             'pageTitle' => 'Frequently Asked Questions',
-            'faqs' => $this->sampleFaqs(),
+            'faqs' => $faqs,
         ]);
     }
 
-    private function sampleHouses(): array
+    /**
+     * Get FAQ data.
+     */
+    private function getFaqs(): array
     {
+        // You can replace this with a Faq model if you have one
+        // For now, returning static data
         return [
-            ['slug' => 'kigali-heights-apartment', 'title' => 'Kigali Heights Apartment', 'location' => 'Kacyiru, Kigali', 'price' => 'RWF 450,000/mo', 'beds' => 3, 'baths' => 2, 'type' => 'Apartment', 'image' => 'assets/housing/property-01.webp', 'status' => 'available'],
-            ['slug' => 'nyarutarama-villa', 'title' => 'Nyarutarama Villa', 'location' => 'Nyarutarama, Kigali', 'price' => 'RWF 1,200,000/mo', 'beds' => 5, 'baths' => 4, 'type' => 'Villa', 'image' => 'assets/housing/hero-house.webp', 'status' => 'available'],
-            ['slug' => 'remera-townhouse', 'title' => 'Remera Townhouse', 'location' => 'Remera, Kigali', 'price' => 'RWF 650,000/mo', 'beds' => 4, 'baths' => 3, 'type' => 'Townhouse', 'image' => 'assets/gallery/house-02.webp', 'status' => 'rented'],
-        ];
-    }
-
-    private function sampleCars(): array
-    {
-        return [
-            ['slug' => 'toyota-rav4', 'title' => 'Toyota RAV4', 'type' => 'SUV', 'price' => 'RWF 80,000/day', 'seats' => 5, 'transmission' => 'Automatic', 'image' => 'assets/transport/car-01.webp', 'status' => 'available'],
-            ['slug' => 'mercedes-e-class', 'title' => 'Mercedes E-Class', 'type' => 'Sedan', 'price' => 'RWF 120,000/day', 'seats' => 5, 'transmission' => 'Automatic', 'image' => 'assets/transport/hero-car.webp', 'status' => 'available'],
-            ['slug' => 'toyota-hiace', 'title' => 'Toyota Hiace', 'type' => 'Van', 'price' => 'RWF 150,000/day', 'seats' => 14, 'transmission' => 'Manual', 'image' => 'assets/transport/car-01.webp', 'status' => 'booked'],
-        ];
-    }
-
-    private function sampleEvents(): array
-    {
-        return [
-            ['slug' => 'wedding-planning', 'title' => 'Wedding Planning', 'category' => 'Weddings', 'price' => 'From RWF 2,000,000', 'image' => 'assets/events/event-01.webp', 'status' => 'active'],
-            ['slug' => 'corporate-conference', 'title' => 'Corporate Conference', 'category' => 'Corporate', 'price' => 'From RWF 1,500,000', 'image' => 'assets/gallery/corporate-01.webp', 'status' => 'active'],
-            ['slug' => 'private-celebration', 'title' => 'Private Celebration', 'category' => 'Private', 'price' => 'From RWF 800,000', 'image' => 'assets/gallery/event-decor-01.webp', 'status' => 'active'],
-        ];
-    }
-
-    private function sampleFaqs(): array
-    {
-        return [
-            ['question' => 'What areas do you serve?', 'answer' => 'We primarily serve Kigali and surrounding areas in Rwanda, with services available nationwide for events and transport.'],
-            ['question' => 'How do I book a property viewing?', 'answer' => 'Contact us via WhatsApp or email, and our team will schedule a convenient viewing within 24–48 hours.'],
-            ['question' => 'Do you offer chauffeur services?', 'answer' => 'Yes, all our vehicles can be rented with a professional chauffeur upon request.'],
-            ['question' => 'What is included in event management?', 'answer' => 'Our event packages include venue coordination, décor, catering liaison, transport, and on-day management.'],
+            [
+                'question' => 'What areas do you serve?',
+                'answer' => 'We primarily serve Kigali and surrounding areas in Rwanda, with services available nationwide for events and transport.',
+            ],
+            [
+                'question' => 'How do I book a property viewing?',
+                'answer' => 'Contact us via WhatsApp or email, and our team will schedule a convenient viewing within 24–48 hours.',
+            ],
+            [
+                'question' => 'Do you offer chauffeur services?',
+                'answer' => 'Yes, all our vehicles can be rented with a professional chauffeur upon request.',
+            ],
+            [
+                'question' => 'What is included in event management?',
+                'answer' => 'Our event packages include venue coordination, décor, catering liaison, transport, and on-day management.',
+            ],
+            [
+                'question' => 'How can I list my property with ME FOR YOU?',
+                'answer' => 'Contact our team with your property details, photos, and pricing. We\'ll handle the listing, viewings, and negotiations.',
+            ],
+            [
+                'question' => 'What types of vehicles are available for rent?',
+                'answer' => 'We offer sedans, SUVs, vans, and luxury vehicles. All are well-maintained and available with or without a driver.',
+            ],
+            [
+                'question' => 'Do you offer customized event packages?',
+                'answer' => 'Yes, every event is unique. We work with you to create a customized package that fits your vision and budget.',
+            ],
+            [
+                'question' => 'How do I get a quote for your services?',
+                'answer' => 'Simply contact us via email, phone, or WhatsApp with your requirements, and we\'ll provide a detailed quote within 24 hours.',
+            ],
         ];
     }
 }

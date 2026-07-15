@@ -7,7 +7,7 @@
     <div class="max-w-[1200px] mx-auto">
         <p class="section-label !text-accent">Housing</p>
         <h1 class="font-display text-4xl sm:text-5xl font-semibold">Find your next home in Kigali</h1>
-        <p class="text-neutral-content/70 max-w-[540px] mt-3">Curated apartments, villas, and townhouses — vetted and managed by ME FOR YOU.</p>
+        <p class="text-neutral-content/70 max-w-[540px] mt-3">Curated apartments, villas, and townhouses   vetted and managed by ME FOR YOU.</p>
     </div>
 </section>
 

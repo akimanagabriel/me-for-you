@@ -402,7 +402,7 @@
                     </div>
                     <div class="flex justify-between">
                         <dt class="text-base-content/60">Published</dt>
-                        <dd class="font-medium">{{ $house->published_at?->format('M j, Y') ?? '—' }}</dd>
+                        <dd class="font-medium">{{ $house->published_at?->format('M j, Y') ?? ' ' }}</dd>
                     </div>
                     <div class="flex justify-between">
                         <dt class="text-base-content/60">Last Updated</dt>

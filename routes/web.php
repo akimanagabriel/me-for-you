@@ -1,19 +1,33 @@
 <?php
 
-use App\Http\Controllers\Admin\AdminPageController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\CarController;
+use App\Http\Controllers\ContactController;
 use App\Http\Controllers\EventController;
-use App\Http\Controllers\HomeController;
 use App\Http\Controllers\HouseController;
+use App\Http\Controllers\LandingPageController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\PublicPageController;
+use App\Http\Controllers\ServicePageController;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', function () {
-    return view('landing-page', ['transparentNav' => true]);
-})->name('home');
 
+// Landing Page - Now using controller with database data
+Route::get('/', [LandingPageController::class, 'index'])->name('home');
+
+// Service Pages
+Route::prefix('services')->name('services.')->group(function () {
+    Route::get('/events', [ServicePageController::class, 'events'])->name('events');
+    Route::get('/events/{slug}', [ServicePageController::class, 'eventShow'])->name('event.show');
+
+    Route::get('/housing', [ServicePageController::class, 'housing'])->name('housing');
+    Route::get('/housing/{slug}', [ServicePageController::class, 'houseShow'])->name('house.show');
+
+    Route::get('/transport', [ServicePageController::class, 'transport'])->name('transport');
+    Route::get('/transport/{slug}', [ServicePageController::class, 'carShow'])->name('car.show');
+});
+
+// Public routes
 Route::get('/houses', [PublicPageController::class, 'houses'])->name('houses.index');
 Route::get('/houses/{slug}', [PublicPageController::class, 'houseShow'])->name('houses.show');
 Route::get('/cars', [PublicPageController::class, 'cars'])->name('cars.index');
@@ -22,6 +36,7 @@ Route::get('/events', [PublicPageController::class, 'events'])->name('events.ind
 Route::get('/events/{slug}', [PublicPageController::class, 'eventShow'])->name('events.show');
 Route::get('/about', [PublicPageController::class, 'about'])->name('about');
 Route::get('/contact', [PublicPageController::class, 'contact'])->name('contact');
+Route::post('/contact', [ContactController::class, 'submit'])->name('contact.submit');
 Route::get('/gallery', [PublicPageController::class, 'gallery'])->name('gallery');
 Route::get('/faq', [PublicPageController::class, 'faq'])->name('faq');
 
@@ -56,26 +71,6 @@ Route::middleware('auth')->group(function () {
             Route::delete('/delete', [ProfileController::class, 'destroy'])->name('delete');
         });
 
-        $resources = [
-            'categories',
-            'locations',
-            'bookings',
-            'inquiries',
-            'reviews',
-            'users',
-            'roles',
-            'settings',
-            'banners',
-            'faqs',
-            'subscribers',
-            'activity-logs',
-        ];
-
-        foreach ($resources as $resource) {
-            Route::get("/{$resource}", [AdminPageController::class, 'index'])
-                ->defaults('resource', $resource)
-                ->name("{$resource}.index");
-        }
     });
 
 
