@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\Admin\TeamMemberController;
 use App\Http\Controllers\CarController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\EventController;
@@ -40,7 +41,12 @@ Route::post('/contact', [ContactController::class, 'submit'])->name('contact.sub
 Route::get('/gallery', [PublicPageController::class, 'gallery'])->name('gallery');
 Route::get('/faq', [PublicPageController::class, 'faq'])->name('faq');
 
-Auth::routes();
+// Public team routes
+Route::get('/team', [PublicPageController::class, 'team'])->name('team');
+Route::get('/team/{slug}', [PublicPageController::class, 'teamShow'])->name('team.show');
+
+
+Auth::routes(['register' => false]);
 
 Route::middleware('auth')->group(function () {
     Route::redirect('/home', "/admin")->name('home.dashboard');
@@ -51,6 +57,10 @@ Route::middleware('auth')->group(function () {
         Route::resource("houses", HouseController::class)->names("houses");
         Route::resource('cars', CarController::class)->names('cars');
         Route::resource('events', EventController::class)->names('events');
+
+        Route::resource('team-members', TeamMemberController::class)->names('team-members')->except(['show']);
+        Route::put('team-members/{teamMember}/toggle', [TeamMemberController::class, 'toggleActive'])->name('team-members.toggle');
+        Route::put('team-members/{teamMember}/toggle-featured', [TeamMemberController::class, 'toggleFeatured'])->name('team-members.toggle-featured');
 
 
         // Profile routes

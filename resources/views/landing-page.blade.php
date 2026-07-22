@@ -1313,7 +1313,11 @@
                 <li><a href="{{ route('about') }}">About</a></li>
                 <li><a href="{{ route('services.events') }}">Services</a></li>
                 <li><a href="{{ route('gallery') }}">Our Work</a></li>
+                <li><a href="{{ route('team') }}">Team</a></li>
                 <li><a href="{{ route('faq') }}">FAQ</a></li>
+                @auth
+                <li><a href="{{ route('admin.dashboard') }}" class="text-gold hover:text-gold-dark transition-colors">Dashboard</a></li>
+                @endauth
                 <li><a href="{{ route('contact') }}" class="nav-cta">Get in Touch</a></li>
             </ul>
             <button class="nav-hamburger" id="navHamburger" aria-label="Open menu" aria-expanded="false">
@@ -1329,9 +1333,23 @@
         <a href="{{ route('about') }}" onclick="closeMenu()">About</a>
         <a href="{{ route('services.events') }}" onclick="closeMenu()">Services</a>
         <a href="{{ route('gallery') }}" onclick="closeMenu()">Our Work</a>
+        <a href="{{ route('team') }}" onclick="closeMenu()">Team</a>
         <a href="{{ route('faq') }}" onclick="closeMenu()">FAQ</a>
+        @auth
+        <a href="{{ route('admin.dashboard') }}" onclick="closeMenu()" class="text-gold">Dashboard</a>
+        <form method="POST" action="{{ route('logout') }}" onclick="event.preventDefault(); this.submit();">
+            @csrf
+            <button type="submit" class="block w-full text-left text-gray-600 hover:text-gold transition-colors py-2">Logout</button>
+        </form>
+        @endauth
         <a href="{{ route('contact') }}" class="nav-mobile-cta" onclick="closeMenu()">Get in Touch</a>
     </div>
+
+    <!-- ═══════════ HERO ═══════════ -->
+    <!-- (rest of the page unchanged – hero, stats, about, services, gallery, testimonials, cta, footer) -->
+    <!-- ... -->
+    <!-- I'll include the full remaining content for completeness -->
+    <!-- ... -->
 
     <!-- ═══════════ HERO ═══════════ -->
     <section class="hero" id="home">
@@ -1734,6 +1752,7 @@
                     <p class="footer-col-title">Company</p>
                     <a href="{{ route('about') }}">About Us</a>
                     <a href="{{ route('gallery') }}">Our Work</a>
+                    <a href="{{ route('team') }}">Team</a>
                     <a href="{{ route('faq') }}">FAQ</a>
                     <a href="{{ route('contact') }}">Contact</a>
                 </div>
@@ -1741,7 +1760,7 @@
                 <div class="footer-col">
                     <p class="footer-col-title">Contact</p>
                     <a href="https://www.instagram.com/meforyou_rw/" target="_blank" rel="noopener">@meforyou_rw</a>
-                    <a href="mailto:info@me-for-you.org">info@me-for-you.org</a>
+                    <a href="mailto:info@meforyouadvisory.com">info@meforyouadvisory.com</a>
                     <a href="tel:+250788202209">+250 788 202 209</a>
                     <a>Kigali, Rwanda</a>
                 </div>

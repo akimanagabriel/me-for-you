@@ -16,30 +16,11 @@
                 Let's Talk
             </h1>
             <p class="text-lg text-white/60 max-w-2xl leading-relaxed">
-                Reach out for housing, transport, or event enquiries   we usually respond within a day.
+                Reach out for housing, transport, or event enquiries — we usually respond within a day.
             </p>
         </div>
     </div>
 </section>
-
-<!-- Add this after the hero section or before the form -->
-@if(session('success'))
-    <div class="bg-green-50 border border-green-200 text-green-700 px-4 py-3 rounded-lg mb-6 flex items-center justify-between">
-        <span>{{ session('success') }}</span>
-        <button onclick="this.parentElement.remove()" class="text-green-500 hover:text-green-700">
-            <i class="fas fa-times"></i>
-        </button>
-    </div>
-@endif
-
-@if(session('error'))
-    <div class="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg mb-6 flex items-center justify-between">
-        <span>{{ session('error') }}</span>
-        <button onclick="this.parentElement.remove()" class="text-red-500 hover:text-red-700">
-            <i class="fas fa-times"></i>
-        </button>
-    </div>
-@endif
 
 <!-- Contact Section -->
 <section class="py-20 bg-white">
@@ -49,23 +30,17 @@
             <div class="bg-[#f5f0e8] rounded-xl p-8 border border-[#ede7d8]">
                 <h2 class="font-display text-2xl font-semibold text-[#1a1714] mb-6">Send Us a Message</h2>
                 
-                <form method="POST" action="{{ route('contact') }}" class="space-y-5">
-                    @csrf
-                    
+                <form id="contactForm" class="space-y-5" onsubmit="sendToWhatsApp(event)">
                     <div>
                         <label for="name" class="block text-sm font-medium text-[#1a1714] mb-1.5">Full Name <span class="text-[#b87f3a]">*</span></label>
                         <input 
                             type="text" 
                             id="name" 
                             name="name" 
-                            value="{{ old('name') }}"
-                            class="w-full px-4 py-2.5 bg-white border border-[#ede7d8] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#b87f3a]/20 focus:border-[#b87f3a] transition-colors @error('name') border-red-500 @enderror"
+                            class="w-full px-4 py-2.5 bg-white border border-[#ede7d8] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#b87f3a]/20 focus:border-[#b87f3a] transition-colors"
                             placeholder="Your full name"
                             required
                         >
-                        @error('name')
-                            <p class="text-sm text-red-500 mt-1">{{ $message }}</p>
-                        @enderror
                     </div>
 
                     <div>
@@ -74,14 +49,10 @@
                             type="email" 
                             id="email" 
                             name="email" 
-                            value="{{ old('email') }}"
-                            class="w-full px-4 py-2.5 bg-white border border-[#ede7d8] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#b87f3a]/20 focus:border-[#b87f3a] transition-colors @error('email') border-red-500 @enderror"
+                            class="w-full px-4 py-2.5 bg-white border border-[#ede7d8] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#b87f3a]/20 focus:border-[#b87f3a] transition-colors"
                             placeholder="your@email.com"
                             required
                         >
-                        @error('email')
-                            <p class="text-sm text-red-500 mt-1">{{ $message }}</p>
-                        @enderror
                     </div>
 
                     <div>
@@ -90,13 +61,9 @@
                             type="tel" 
                             id="phone" 
                             name="phone" 
-                            value="{{ old('phone') }}"
-                            class="w-full px-4 py-2.5 bg-white border border-[#ede7d8] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#b87f3a]/20 focus:border-[#b87f3a] transition-colors @error('phone') border-red-500 @enderror"
+                            class="w-full px-4 py-2.5 bg-white border border-[#ede7d8] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#b87f3a]/20 focus:border-[#b87f3a] transition-colors"
                             placeholder="+250 788 202 209"
                         >
-                        @error('phone')
-                            <p class="text-sm text-red-500 mt-1">{{ $message }}</p>
-                        @enderror
                     </div>
 
                     <div>
@@ -104,18 +71,15 @@
                         <select 
                             id="subject" 
                             name="subject" 
-                            class="w-full px-4 py-2.5 bg-white border border-[#ede7d8] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#b87f3a]/20 focus:border-[#b87f3a] transition-colors @error('subject') border-red-500 @enderror"
+                            class="w-full px-4 py-2.5 bg-white border border-[#ede7d8] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#b87f3a]/20 focus:border-[#b87f3a] transition-colors"
                         >
                             <option value="">Select a subject</option>
-                            <option value="housing" {{ old('subject') == 'housing' ? 'selected' : '' }}>Housing Enquiry</option>
-                            <option value="events" {{ old('subject') == 'events' ? 'selected' : '' }}>Event Management</option>
-                            <option value="transport" {{ old('subject') == 'transport' ? 'selected' : '' }}>Transport Services</option>
-                            <option value="general" {{ old('subject') == 'general' ? 'selected' : '' }}>General Enquiry</option>
-                            <option value="partnership" {{ old('subject') == 'partnership' ? 'selected' : '' }}>Partnership / Collaboration</option>
+                            <option value="Housing Enquiry">Housing Enquiry</option>
+                            <option value="Event Management">Event Management</option>
+                            <option value="Transport Services">Transport Services</option>
+                            <option value="General Enquiry">General Enquiry</option>
+                            <option value="Partnership / Collaboration">Partnership / Collaboration</option>
                         </select>
-                        @error('subject')
-                            <p class="text-sm text-red-500 mt-1">{{ $message }}</p>
-                        @enderror
                     </div>
 
                     <div>
@@ -124,17 +88,14 @@
                             id="message" 
                             name="message" 
                             rows="5" 
-                            class="w-full px-4 py-2.5 bg-white border border-[#ede7d8] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#b87f3a]/20 focus:border-[#b87f3a] transition-colors @error('message') border-red-500 @enderror"
+                            class="w-full px-4 py-2.5 bg-white border border-[#ede7d8] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#b87f3a]/20 focus:border-[#b87f3a] transition-colors"
                             placeholder="Tell us how we can help you..."
                             required
-                        >{{ old('message') }}</textarea>
-                        @error('message')
-                            <p class="text-sm text-red-500 mt-1">{{ $message }}</p>
-                        @enderror
+                        ></textarea>
                     </div>
 
                     <button type="submit" class="w-full bg-[#b87f3a] hover:bg-[#8a6e22] text-white font-semibold px-6 py-3 rounded-lg transition-colors flex items-center justify-center gap-2">
-                        <i class="fas fa-paper-plane"></i> Send Message
+                        <i class="fa-solid fa-paper-plane"></i> Send Message
                     </button>
                 </form>
             </div>
@@ -155,13 +116,13 @@
                     <div class="bg-[#f5f0e8] rounded-xl p-6 border border-[#ede7d8] hover:border-[#b87f3a] transition-colors group">
                         <div class="flex items-start gap-4">
                             <div class="w-12 h-12 bg-[#b87f3a]/10 rounded-lg flex items-center justify-center text-[#b87f3a] flex-shrink-0 group-hover:bg-[#b87f3a]/20 transition-colors">
-                                <i class="fas fa-map-marker-alt text-xl"></i>
+                                <i class="fa-solid fa-location-dot text-xl"></i>
                             </div>
                             <div>
                                 <h3 class="font-display text-lg font-semibold text-[#1a1714] mb-1">Office</h3>
                                 <p class="text-[#7a7268]">Kigali, Rwanda</p>
                                 <a href="https://www.google.com/maps/search/Kigali+Rwanda" target="_blank" class="text-[#b87f3a] text-sm font-semibold hover:underline inline-flex items-center gap-1 mt-1">
-                                    View on Maps <i class="fas fa-arrow-right text-xs"></i>
+                                    View on Maps <i class="fa-solid fa-arrow-right text-xs"></i>
                                 </a>
                             </div>
                         </div>
@@ -171,11 +132,11 @@
                     <div class="bg-[#f5f0e8] rounded-xl p-6 border border-[#ede7d8] hover:border-[#b87f3a] transition-colors group">
                         <div class="flex items-start gap-4">
                             <div class="w-12 h-12 bg-[#b87f3a]/10 rounded-lg flex items-center justify-center text-[#b87f3a] flex-shrink-0 group-hover:bg-[#b87f3a]/20 transition-colors">
-                                <i class="fas fa-envelope text-xl"></i>
+                                <i class="fa-solid fa-envelope text-xl"></i>
                             </div>
                             <div>
                                 <h3 class="font-display text-lg font-semibold text-[#1a1714] mb-1">Email</h3>
-                                <a href="mailto:info@me-for-you.org" class="text-[#b87f3a] hover:underline font-medium">info@me-for-you.org</a>
+                                <a href="mailto:info@meforyouadvisory.com" class="text-[#b87f3a] hover:underline font-medium">info@meforyouadvisory.com</a>
                             </div>
                         </div>
                     </div>
@@ -184,7 +145,7 @@
                     <div class="bg-[#f5f0e8] rounded-xl p-6 border border-[#ede7d8] hover:border-[#b87f3a] transition-colors group">
                         <div class="flex items-start gap-4">
                             <div class="w-12 h-12 bg-[#b87f3a]/10 rounded-lg flex items-center justify-center text-[#b87f3a] flex-shrink-0 group-hover:bg-[#b87f3a]/20 transition-colors">
-                                <i class="fas fa-phone text-xl"></i>
+                                <i class="fa-solid fa-phone text-xl"></i>
                             </div>
                             <div>
                                 <h3 class="font-display text-lg font-semibold text-[#1a1714] mb-1">Phone</h3>
@@ -198,7 +159,7 @@
                     <div class="bg-[#f5f0e8] rounded-xl p-6 border border-[#ede7d8] hover:border-[#25D366] transition-colors group">
                         <div class="flex items-start gap-4">
                             <div class="w-12 h-12 bg-[#25D366]/10 rounded-lg flex items-center justify-center text-[#25D366] flex-shrink-0 group-hover:bg-[#25D366]/20 transition-colors">
-                                <i class="fab fa-whatsapp text-xl"></i>
+                                <i class="fa-brands fa-whatsapp text-xl"></i>
                             </div>
                             <div>
                                 <h3 class="font-display text-lg font-semibold text-[#1a1714] mb-1">WhatsApp</h3>
@@ -208,45 +169,23 @@
                         </div>
                     </div>
                 </div>
-
-                <!-- Social Links -->
-                <div class="bg-[#f5f0e8] rounded-xl p-6 border border-[#ede7d8]">
-                    <h3 class="font-display text-lg font-semibold text-[#1a1714] mb-4">Follow Us</h3>
-                    <div class="flex gap-3">
-                        <a href="https://www.instagram.com/meforyou_rw/" target="_blank" class="w-10 h-10 bg-[#1a1714] text-white rounded-full flex items-center justify-center hover:bg-[#b87f3a] transition-colors">
-                            <i class="fab fa-instagram"></i>
-                        </a>
-                        <a href="#" target="_blank" class="w-10 h-10 bg-[#1a1714] text-white rounded-full flex items-center justify-center hover:bg-[#b87f3a] transition-colors">
-                            <i class="fab fa-facebook-f"></i>
-                        </a>
-                        <a href="#" target="_blank" class="w-10 h-10 bg-[#1a1714] text-white rounded-full flex items-center justify-center hover:bg-[#b87f3a] transition-colors">
-                            <i class="fab fa-x-twitter"></i>
-                        </a>
-                        <a href="#" target="_blank" class="w-10 h-10 bg-[#1a1714] text-white rounded-full flex items-center justify-center hover:bg-[#b87f3a] transition-colors">
-                            <i class="fab fa-linkedin-in"></i>
-                        </a>
-                    </div>
-                </div>
             </div>
         </div>
     </div>
 </section>
 
-<!-- Map Section -->
+<!-- Map Section - Full Width -->
 <section class="py-0 bg-[#f5f0e8]">
-    <div class="container mx-auto px-4">
-        <div class="rounded-xl overflow-hidden h-80 border border-[#ede7d8]">
-            <iframe 
-                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d255138.8921732598!2d29.956094349999998!3d-1.95311995!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x19dca4258ed8e797%3A0xf33d2d8f4e7c1b3!2sKigali%2C%20Rwanda!5e0!3m2!1sen!2s!4v1700000000000" 
-                width="100%" 
-                height="100%" 
-                style="border:0;" 
-                allowfullscreen="" 
-                loading="lazy" 
-                referrerpolicy="no-referrer-when-downgrade"
-                class="hover:opacity-90 transition-opacity"
-            ></iframe>
-        </div>
+    <div class="w-full h-96">
+        <iframe 
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d255138.8921732598!2d29.956094349999998!3d-1.95311995!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x19dca4258ed8e797%3A0xf33d2d8f4e7c1b3!2sKigali%2C%20Rwanda!5e0!3m2!1sen!2s!4v1700000000000" 
+            width="100%" 
+            height="100%" 
+            style="border:0;" 
+            allowfullscreen="" 
+            loading="lazy" 
+            referrerpolicy="no-referrer-when-downgrade"
+        ></iframe>
     </div>
 </section>
 
@@ -258,8 +197,52 @@
             We're always happy to meet and discuss how we can help you with your housing, event, or transport needs.
         </p>
         <a href="https://wa.me/+250788202209" target="_blank" class="inline-flex items-center gap-2 bg-white text-[#8a6e22] font-semibold px-8 py-3 rounded-lg hover:bg-[#f5f0e8] transition-colors">
-            <i class="fab fa-whatsapp"></i> Chat on WhatsApp
+            <i class="fa-brands fa-whatsapp"></i> Chat on WhatsApp
         </a>
     </div>
 </section>
+
+@push('scripts')
+<script>
+function sendToWhatsApp(event) {
+    event.preventDefault();
+
+    // Get form values
+    const name = document.getElementById('name').value.trim();
+    const email = document.getElementById('email').value.trim();
+    const phone = document.getElementById('phone').value.trim();
+    const subject = document.getElementById('subject').value || 'General Enquiry';
+    const message = document.getElementById('message').value.trim();
+
+    // Basic validation
+    if (!name || !email || !message) {
+        alert('Please fill in all required fields (Name, Email, and Message).');
+        return;
+    }
+
+    // Build WhatsApp message - NO EMOJIS
+    const whatsappMessage = 
+'--------------------------------------------------\n' +
+'NEW ENQUIRY FROM ME FOR YOU WEBSITE\n' +
+'--------------------------------------------------\n\n' +
+'Name: ' + name + '\n' +
+'Email: ' + email + '\n' +
+'Phone: ' + (phone || 'Not provided') + '\n' +
+'Subject: ' + subject + '\n\n' +
+'Message:\n' + message + '\n\n' +
+'--------------------------------------------------\n' +
+'Sent from ME FOR YOU website';
+
+    // Encode and send to WhatsApp
+    const encoded = encodeURIComponent(whatsappMessage);
+    const phoneNumber = '250788202209';
+    
+    // Open WhatsApp in a new tab
+    window.open('https://wa.me/' + phoneNumber + '?text=' + encoded, '_blank');
+
+    // Show confirmation
+    alert('Your message has been prepared! Click Send on WhatsApp to complete.');
+}
+</script>
+@endpush
 @endsection

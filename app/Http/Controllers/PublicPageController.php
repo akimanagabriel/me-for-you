@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Car;
 use App\Models\Event;
 use App\Models\House;
+use App\Models\TeamMember;
 use Illuminate\View\View;
 
 class PublicPageController extends Controller
@@ -218,7 +219,7 @@ class PublicPageController extends Controller
         $houseImages = House::whereNotNull('cover_image')
             ->where('status', 'available')
             ->latest()
-            ->take(8)
+            ->take(20)
             ->get()
             ->map(function ($item) {
                 return [
@@ -232,7 +233,7 @@ class PublicPageController extends Controller
         $eventImages = Event::whereNotNull('cover_image')
             ->where('status', 'active')
             ->latest()
-            ->take(8)
+            ->take(20)
             ->get()
             ->map(function ($item) {
                 return [
@@ -246,7 +247,7 @@ class PublicPageController extends Controller
         $carImages = Car::whereNotNull('cover_image')
             ->where('status', 'available')
             ->latest()
-            ->take(8)
+            ->take(20)
             ->get()
             ->map(function ($item) {
                 return [
@@ -321,5 +322,45 @@ class PublicPageController extends Controller
                 'answer' => 'Simply contact us via email, phone, or WhatsApp with your requirements, and we\'ll provide a detailed quote within 24 hours.',
             ],
         ];
+    }
+
+
+    /**
+     * Display the team page.
+     */
+    public function team(): View
+    {
+        $members = TeamMember::active()
+            ->ordered()
+            ->get();
+
+        $featuredMembers = TeamMember::active()
+            ->featured()
+            ->ordered()
+            ->take(3)
+            ->get();
+
+        return view('public.team', [
+            'pageTitle' => 'Our Team',
+            'members' => $members,
+            'featuredMembers' => $featuredMembers,
+        ]);
+    }
+
+    /**
+     * Display a single team member detail.
+     */
+    public function teamShow(string $slug): View
+    {
+        $member = TeamMember::where('slug', $slug)
+            ->where('is_active', true)
+            ->firstOrFail();
+
+        $member->increment('views_count');
+
+        return view('public.team-show', [
+            'pageTitle' => $member->name,
+            'member' => $member,
+        ]);
     }
 }
