@@ -330,14 +330,17 @@ class PublicPageController extends Controller
      */
     public function team(): View
     {
-        $members = TeamMember::active()
-            ->ordered()
-            ->get();
-
+        // Featured members (active, featured, ordered, limit 3)
         $featuredMembers = TeamMember::active()
             ->featured()
             ->ordered()
             ->take(3)
+            ->get();
+
+        // All other active members (exclude featured)
+        $members = TeamMember::active()
+            ->ordered()
+            ->where('is_featured', false)   // exclude featured
             ->get();
 
         return view('public.team', [

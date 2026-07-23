@@ -1,16 +1,17 @@
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    
+
     <!-- Favicon -->
     <link rel="apple-touch-icon" sizes="180x180" href="{{ asset('apple-touch-icon.png') }}">
     <link rel="icon" type="image/png" sizes="32x32" href="{{ asset('favicon-32x32.png') }}">
     <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('favicon-16x16.png') }}">
     <link rel="manifest" href="{{ asset('site.webmanifest') }}">
-    
+
     <title>@yield('title', config('app.name', 'ME FOR YOU'))</title>
 
     <!-- ═══════════ OPEN GRAPH / SEO ═══════════ -->
@@ -41,10 +42,12 @@
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Inter:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
 
-    <!-- Font Awesome -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Font Awesome 6 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
     <!-- Styles -->
     <style>
@@ -63,7 +66,8 @@
             font-family: var(--font-body);
             color: var(--ink);
             background: #ffffff;
-            padding-top: 72px; /* Space for fixed nav */
+            padding-top: 72px;
+            /* Space for fixed nav */
         }
 
         .font-display {
@@ -73,9 +77,11 @@
         .text-gold {
             color: var(--gold);
         }
+
         .text-gold-light {
             color: var(--gold-light);
         }
+
         .text-gold-dark {
             color: var(--gold-dark);
         }
@@ -83,12 +89,15 @@
         .bg-gold {
             background: var(--gold);
         }
+
         .bg-gold-dark {
             background: var(--gold-dark);
         }
+
         .bg-gold-light {
             background: var(--gold-light);
         }
+
         .bg-gold\/10 {
             background: rgba(184, 127, 58, 0.1);
         }
@@ -96,6 +105,7 @@
         .hover\:bg-gold-dark:hover {
             background: var(--gold-dark);
         }
+
         .hover\:text-gold:hover {
             color: var(--gold);
         }
@@ -126,53 +136,67 @@
 
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
+
 <body>
-    <!-- ═══════════ STICKY NAV ═══════════ -->
+    <!--  STICKY NAV  -->
     <nav class="nav-sticky" id="mainNav">
         <div class="container mx-auto px-4">
             <div class="flex justify-between items-center h-16">
                 <!-- Logo with Image -->
                 <a href="{{ route('home') }}" class="flex items-center gap-2 group">
-                    <img src="{{ asset('android-chrome-512x512.png') }}" 
-                         alt="ME FOR YOU Logo" 
-                         class="w-10 h-10 object-contain transition-transform duration-300 group-hover:scale-105">
+                    <img src="{{ asset('android-chrome-512x512.png') }}" alt="ME FOR YOU Logo"
+                        class="w-10 h-10 object-contain transition-transform duration-300 group-hover:scale-105">
                     <span class="font-display text-2xl font-semibold text-gray-900">
                         ME <span class="text-gold">FOR</span> YOU
                     </span>
                 </a>
-                
+
                 <!-- Desktop Navigation -->
                 <div class="hidden md:flex items-center space-x-8">
-                    <a href="{{ route('services.events') }}" class="text-gray-600 hover:text-gold transition-colors font-medium text-sm">Events</a>
-                    <a href="{{ route('services.housing') }}" class="text-gray-600 hover:text-gold transition-colors font-medium text-sm">Housing</a>
-                    <a href="{{ route('services.transport') }}" class="text-gray-600 hover:text-gold transition-colors font-medium text-sm">Transport</a>
-                    <a href="{{ route('about') }}" class="text-gray-600 hover:text-gold transition-colors font-medium text-sm">About</a>
-                    <a href="{{ route('team') }}" class="text-gray-600 hover:text-gold transition-colors font-medium text-sm">Team</a>
+                    <a href="{{ route('services.events') }}"
+                        class="text-gray-600 hover:text-gold transition-colors font-medium text-sm">Events</a>
+                    <a href="{{ route('services.housing') }}"
+                        class="text-gray-600 hover:text-gold transition-colors font-medium text-sm">Housing</a>
+                    <a href="{{ route('services.transport') }}"
+                        class="text-gray-600 hover:text-gold transition-colors font-medium text-sm">Transport</a>
+                    <a href="{{ route('about') }}"
+                        class="text-gray-600 hover:text-gold transition-colors font-medium text-sm">About</a>
+                    <a href="{{ route('team') }}"
+                        class="text-gray-600 hover:text-gold transition-colors font-medium text-sm">Team</a>
                     @auth
-                    <a href="{{ route('admin.dashboard') }}" class="text-gold hover:text-gold-dark transition-colors font-medium text-sm">Dashboard</a>
+                        <a href="{{ route('admin.dashboard') }}"
+                            class="text-gold hover:text-gold-dark transition-colors font-medium text-sm">Dashboard</a>
                     @endauth
-                    <a href="{{ route('contact') }}" class="bg-gold text-white px-4 py-2 rounded-lg hover:bg-gold-dark transition-colors font-medium text-sm">Contact</a>
+                    <a href="{{ route('contact') }}"
+                        class="bg-gold text-white px-4 py-2 rounded-lg hover:bg-gold-dark transition-colors font-medium text-sm">Contact</a>
                 </div>
-                
+
                 <!-- Mobile Menu Button -->
                 <button class="md:hidden text-gray-600 hover:text-gold transition-colors" id="mobileMenuBtn">
-                    <i class="fas fa-bars text-xl"></i>
+                    <i class="fa-solid fa-bars text-xl"></i>
                 </button>
             </div>
         </div>
-        
+
         <!-- Mobile Menu -->
         <div class="md:hidden hidden bg-white border-t border-gray-100" id="mobileMenu">
             <div class="px-4 pt-2 pb-4 space-y-1">
-                <a href="{{ route('services.events') }}" class="block text-gray-600 hover:text-gold py-2.5 transition-colors font-medium">Events</a>
-                <a href="{{ route('services.housing') }}" class="block text-gray-600 hover:text-gold py-2.5 transition-colors font-medium">Housing</a>
-                <a href="{{ route('services.transport') }}" class="block text-gray-600 hover:text-gold py-2.5 transition-colors font-medium">Transport</a>
-                <a href="{{ route('about') }}" class="block text-gray-600 hover:text-gold py-2.5 transition-colors font-medium">About</a>
-                <a href="{{ route('team') }}" class="block text-gray-600 hover:text-gold py-2.5 transition-colors font-medium">Team</a>
+                <a href="{{ route('services.events') }}"
+                    class="block text-gray-600 hover:text-gold py-2.5 transition-colors font-medium">Events</a>
+                <a href="{{ route('services.housing') }}"
+                    class="block text-gray-600 hover:text-gold py-2.5 transition-colors font-medium">Housing</a>
+                <a href="{{ route('services.transport') }}"
+                    class="block text-gray-600 hover:text-gold py-2.5 transition-colors font-medium">Transport</a>
+                <a href="{{ route('about') }}"
+                    class="block text-gray-600 hover:text-gold py-2.5 transition-colors font-medium">About</a>
+                <a href="{{ route('team') }}"
+                    class="block text-gray-600 hover:text-gold py-2.5 transition-colors font-medium">Team</a>
                 @auth
-                <a href="{{ route('admin.dashboard') }}" class="block text-gold hover:text-gold-dark py-2.5 transition-colors font-medium">Dashboard</a>
+                    <a href="{{ route('admin.dashboard') }}"
+                        class="block text-gold hover:text-gold-dark py-2.5 transition-colors font-medium">Dashboard</a>
                 @endauth
-                <a href="{{ route('contact') }}" class="block bg-gold text-white text-center px-4 py-2.5 rounded-lg hover:bg-gold-dark transition-colors font-medium mt-2">Contact</a>
+                <a href="{{ route('contact') }}"
+                    class="block bg-gold text-white text-center px-4 py-2.5 rounded-lg hover:bg-gold-dark transition-colors font-medium mt-2">Contact</a>
             </div>
         </div>
     </nav>
@@ -189,61 +213,68 @@
                 <!-- Brand -->
                 <div>
                     <div class="flex items-center gap-3 mb-4">
-                        <img src="{{ asset('android-chrome-512x512.png') }}" 
-                             alt="ME FOR YOU Logo" 
-                             class="w-10 h-10 object-contain">
+                        <img src="{{ asset('android-chrome-512x512.png') }}" alt="ME FOR YOU Logo"
+                            class="w-10 h-10 object-contain">
                         <h3 class="font-display text-2xl font-semibold text-white">
                             ME <span class="text-gold">FOR</span> YOU
                         </h3>
                     </div>
-                    <p class="text-sm leading-relaxed">Your professional companion for housing, events, and transport services in Kigali, Rwanda.</p>
+                    <p class="text-sm leading-relaxed">Your professional companion for housing, events, and transport
+                        services in Kigali, Rwanda.</p>
                 </div>
-                
+
                 <!-- Services -->
                 <div>
                     <h4 class="text-white font-semibold mb-4">Services</h4>
                     <ul class="space-y-2 text-sm">
-                        <li><a href="{{ route('services.events') }}" class="hover:text-gold transition-colors">Events</a></li>
-                        <li><a href="{{ route('services.housing') }}" class="hover:text-gold transition-colors">Housing</a></li>
-                        <li><a href="{{ route('services.transport') }}" class="hover:text-gold transition-colors">Transport</a></li>
+                        <li><a href="{{ route('services.events') }}"
+                                class="hover:text-gold transition-colors">Events</a></li>
+                        <li><a href="{{ route('services.housing') }}"
+                                class="hover:text-gold transition-colors">Housing</a></li>
+                        <li><a href="{{ route('services.transport') }}"
+                                class="hover:text-gold transition-colors">Transport</a></li>
                     </ul>
                 </div>
-                
+
                 <!-- Quick Links -->
                 <div>
                     <h4 class="text-white font-semibold mb-4">Quick Links</h4>
                     <ul class="space-y-2 text-sm">
-                        <li><a href="{{ route('about') }}" class="hover:text-gold transition-colors">About Us</a></li>
+                        <li><a href="{{ route('about') }}" class="hover:text-gold transition-colors">About Us</a>
+                        </li>
                         <li><a href="{{ route('team') }}" class="hover:text-gold transition-colors">Our Team</a></li>
-                        <li><a href="{{ route('gallery') }}" class="hover:text-gold transition-colors">Gallery</a></li>
+                        <li><a href="{{ route('gallery') }}" class="hover:text-gold transition-colors">Gallery</a>
+                        </li>
                         <li><a href="{{ route('faq') }}" class="hover:text-gold transition-colors">FAQ</a></li>
                     </ul>
                 </div>
-                
+
                 <!-- Contact -->
                 <div>
                     <h4 class="text-white font-semibold mb-4">Contact</h4>
                     <ul class="space-y-2 text-sm">
                         <li class="flex items-center gap-2">
-                            <i class="fab fa-instagram text-gold"></i>
-                            <a href="https://www.instagram.com/meforyou_rw/" target="_blank" class="hover:text-gold transition-colors">@meforyou_rw</a>
+                            <i class="fa-brands fa-instagram text-gold"></i>
+                            <a href="https://www.instagram.com/meforyou_rw/" target="_blank"
+                                class="hover:text-gold transition-colors">@meforyou_rw</a>
                         </li>
                         <li class="flex items-center gap-2">
-                            <i class="fas fa-envelope text-gold"></i>
-                            <a href="mailto:info@meforyouadvisory.com" class="hover:text-gold transition-colors">info@meforyouadvisory.com</a>
+                            <i class="fa-solid fa-envelope text-gold"></i>
+                            <a href="mailto:info@meforyouadvisory.com"
+                                class="hover:text-gold transition-colors">info@meforyouadvisory.com</a>
                         </li>
                         <li class="flex items-center gap-2">
-                            <i class="fas fa-phone text-gold"></i>
+                            <i class="fa-solid fa-phone text-gold"></i>
                             <a href="tel:+250788202209" class="hover:text-gold transition-colors">+250 788 202 209</a>
                         </li>
                         <li class="flex items-center gap-2">
-                            <i class="fas fa-map-marker-alt text-gold"></i>
+                            <i class="fa-solid fa-location-dot text-gold"></i>
                             <span>Kigali, Rwanda</span>
                         </li>
                     </ul>
                 </div>
             </div>
-            
+
             <div class="border-t border-gray-800 mt-8 pt-8 text-center text-sm">
                 <p>© {{ date('Y') }} ME FOR YOU. All rights reserved.</p>
             </div>
@@ -300,4 +331,5 @@
 
     @stack('scripts')
 </body>
+
 </html>

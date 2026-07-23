@@ -9,13 +9,13 @@
     <link rel="manifest" href="{{ asset('site.webmanifest') }}">
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description"
-          content="ME FOR YOU offers trusted housing, event management, and transport services in Kigali, Rwanda." />
+        content="ME FOR YOU offers trusted housing, event management, and transport services in Kigali, Rwanda." />
     <meta name="theme-color" content="#b87f3a" />
 
     <!-- Open Graph / Facebook -->
     <meta property="og:title" content="ME FOR YOU | Professional Companion for Housing, Events & Transport" />
     <meta property="og:description"
-          content="From premium housing support to unforgettable events and reliable transport, ME FOR YOU helps you move through every milestone with confidence." />
+        content="From premium housing support to unforgettable events and reliable transport, ME FOR YOU helps you move through every milestone with confidence." />
     <meta property="og:type" content="website" />
     <meta property="og:url" content="{{ url('/') }}" />
     <meta property="og:image" content="{{ asset('android-chrome-512x512.png') }}" />
@@ -26,15 +26,16 @@
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content="ME FOR YOU | Professional Companion for Housing, Events & Transport" />
     <meta name="twitter:description"
-          content="Trusted housing, event management, and transport services in Kigali, Rwanda." />
+        content="Trusted housing, event management, and transport services in Kigali, Rwanda." />
     <meta name="twitter:image" content="{{ asset('android-chrome-512x512.png') }}" />
     <meta name="twitter:image:alt" content="ME FOR YOU logo" />
 
     <title>ME FOR YOU Your Professional Companion</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Inter:wght@300;400;500;600&display=swap"
-          rel="stylesheet" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Inter:wght@300;400;500;600&display=swap"
+        rel="stylesheet" />
 
     <style>
         /* ─── TOKENS ──────────────────────────────────────────────── */
@@ -1316,7 +1317,8 @@
                 <li><a href="{{ route('team') }}">Team</a></li>
                 <li><a href="{{ route('faq') }}">FAQ</a></li>
                 @auth
-                <li><a href="{{ route('admin.dashboard') }}" class="text-gold hover:text-gold-dark transition-colors">Dashboard</a></li>
+                    <li><a href="{{ route('admin.dashboard') }}"
+                            class="text-gold hover:text-gold-dark transition-colors">Dashboard</a></li>
                 @endauth
                 <li><a href="{{ route('contact') }}" class="nav-cta">Get in Touch</a></li>
             </ul>
@@ -1336,11 +1338,12 @@
         <a href="{{ route('team') }}" onclick="closeMenu()">Team</a>
         <a href="{{ route('faq') }}" onclick="closeMenu()">FAQ</a>
         @auth
-        <a href="{{ route('admin.dashboard') }}" onclick="closeMenu()" class="text-gold">Dashboard</a>
-        <form method="POST" action="{{ route('logout') }}" onclick="event.preventDefault(); this.submit();">
-            @csrf
-            <button type="submit" class="block w-full text-left text-gray-600 hover:text-gold transition-colors py-2">Logout</button>
-        </form>
+            <a href="{{ route('admin.dashboard') }}" onclick="closeMenu()" class="text-gold">Dashboard</a>
+            <form method="POST" action="{{ route('logout') }}" onclick="event.preventDefault(); this.submit();">
+                @csrf
+                <button type="submit"
+                    class="block w-full text-left text-gray-600 hover:text-gold transition-colors py-2">Logout</button>
+            </form>
         @endauth
         <a href="{{ route('contact') }}" class="nav-mobile-cta" onclick="closeMenu()">Get in Touch</a>
     </div>
@@ -1365,19 +1368,24 @@
                 <a href="{{ route('contact') }}" class="btn-outline">Book a Consultation</a>
             </div>
             <div class="hero-services">
-                <a href="{{ route('services.housing') }}" class="hero-service-pill" style="text-decoration:none;">Housing</a>
-                <a href="{{ route('services.events') }}" class="hero-service-pill" style="text-decoration:none;">Events</a>
-                <a href="{{ route('services.transport') }}" class="hero-service-pill" style="text-decoration:none;">Transport</a>
+                <a href="{{ route('services.housing') }}" class="hero-service-pill"
+                    style="text-decoration:none;">Housing</a>
+                <a href="{{ route('services.events') }}" class="hero-service-pill"
+                    style="text-decoration:none;">Events</a>
+                <a href="{{ route('services.transport') }}" class="hero-service-pill"
+                    style="text-decoration:none;">Transport</a>
             </div>
         </div>
 
         <div class="hero-right">
             <div class="hero-img-top">
                 <div class="img-wrapper">
-                    @if($featuredEvents->isNotEmpty())
-                        <img src="{{ $featuredEvents->first()->cover_image ?? asset('assets/events/hero-event.webp') }}" alt="ME FOR YOU Events" loading="lazy" decoding="async" />
+                    @if ($featuredEvents->isNotEmpty())
+                        <img src="{{ $featuredEvents->first()->cover_image ?? asset('assets/events/hero-event.webp') }}"
+                            alt="ME FOR YOU Events" loading="lazy" decoding="async" />
                     @else
-                        <img src="{{ asset('assets/events/hero-event.webp') }}" alt="ME FOR YOU Events" loading="lazy" decoding="async" />
+                        <img src="{{ asset('assets/events/hero-event.webp') }}" alt="ME FOR YOU Events"
+                            loading="lazy" decoding="async" />
                     @endif
                     <div class="fallback">Events Photo</div>
                 </div>
@@ -1387,25 +1395,31 @@
             <div class="hero-img-bottom">
                 <div class="hero-img-cell">
                     <div class="img-wrapper">
-                        @if($featuredHouses->isNotEmpty())
-                            <img src="{{ $featuredHouses->first()->cover_image ?? asset('assets/housing/hero-house.webp') }}" alt="ME FOR YOU Housing" loading="lazy" decoding="async" />
+                        @if ($featuredHouses->isNotEmpty())
+                            <img src="{{ $featuredHouses->first()->cover_image ?? asset('assets/housing/hero-house.webp') }}"
+                                alt="ME FOR YOU Housing" loading="lazy" decoding="async" />
                         @else
-                            <img src="{{ asset('assets/housing/hero-house.webp') }}" alt="ME FOR YOU Housing" loading="lazy" decoding="async" />
+                            <img src="{{ asset('assets/housing/hero-house.webp') }}" alt="ME FOR YOU Housing"
+                                loading="lazy" decoding="async" />
                         @endif
                         <div class="fallback">Housing Photo</div>
                     </div>
-                    <a href="{{ route('services.housing') }}" class="hero-badge" style="font-size:10px; text-decoration:none;">Housing</a>
+                    <a href="{{ route('services.housing') }}" class="hero-badge"
+                        style="font-size:10px; text-decoration:none;">Housing</a>
                 </div>
                 <div class="hero-img-cell">
                     <div class="img-wrapper">
-                        @if($featuredCars->isNotEmpty())
-                            <img src="{{ $featuredCars->first()->cover_image ?? asset('assets/transport/hero-car.webp') }}" alt="ME FOR YOU Transport" loading="lazy" decoding="async" />
+                        @if ($featuredCars->isNotEmpty())
+                            <img src="{{ $featuredCars->first()->cover_image ?? asset('assets/transport/hero-car.webp') }}"
+                                alt="ME FOR YOU Transport" loading="lazy" decoding="async" />
                         @else
-                            <img src="{{ asset('assets/transport/hero-car.webp') }}" alt="ME FOR YOU Transport" loading="lazy" decoding="async" />
+                            <img src="{{ asset('assets/transport/hero-car.webp') }}" alt="ME FOR YOU Transport"
+                                loading="lazy" decoding="async" />
                         @endif
                         <div class="fallback">Transport Photo</div>
                     </div>
-                    <a href="{{ route('services.transport') }}" class="hero-badge" style="font-size:10px; text-decoration:none;">Transport</a>
+                    <a href="{{ route('services.transport') }}" class="hero-badge"
+                        style="font-size:10px; text-decoration:none;">Transport</a>
                 </div>
             </div>
         </div>
@@ -1439,7 +1453,8 @@
             <div style="position:relative;">
                 <div class="about-img-wrap">
                     <div class="img-wrapper">
-                        <img src="{{ asset('assets/gallery/about-brand.webp') }}" alt="ME FOR YOU team" loading="lazy" decoding="async" />
+                        <img src="{{ asset('assets/gallery/about-brand.webp') }}" alt="ME FOR YOU team"
+                            loading="lazy" decoding="async" />
                         <div class="fallback">Brand / Team Photo</div>
                     </div>
                 </div>
@@ -1463,7 +1478,8 @@
                 <div class="about-values">
                     <div class="value-card reveal">
                         <div class="value-title">Professionalism</div>
-                        <div class="value-desc">Expert service at every touchpoint, from first call to final delivery.</div>
+                        <div class="value-desc">Expert service at every touchpoint, from first call to final delivery.
+                        </div>
                     </div>
                     <div class="value-card reveal">
                         <div class="value-title">Affordability</div>
@@ -1497,10 +1513,12 @@
             <div class="service-card reveal">
                 <div class="service-img">
                     <div class="img-wrapper">
-                        @if($featuredEvents->isNotEmpty())
-                            <img src="{{ $featuredEvents->first()->cover_image ?? asset('assets/events/event-01.webp') }}" alt="ME FOR YOU Event Management" loading="lazy" decoding="async" />
+                        @if ($featuredEvents->isNotEmpty())
+                            <img src="{{ $featuredEvents->first()->cover_image ?? asset('assets/events/event-01.webp') }}"
+                                alt="ME FOR YOU Event Management" loading="lazy" decoding="async" />
                         @else
-                            <img src="{{ asset('assets/events/event-01.webp') }}" alt="ME FOR YOU Event Management" loading="lazy" decoding="async" />
+                            <img src="{{ asset('assets/events/event-01.webp') }}" alt="ME FOR YOU Event Management"
+                                loading="lazy" decoding="async" />
                         @endif
                         <div class="fallback">Event Photo</div>
                     </div>
@@ -1527,10 +1545,12 @@
             <div class="service-card reveal">
                 <div class="service-img">
                     <div class="img-wrapper">
-                        @if($featuredHouses->isNotEmpty())
-                            <img src="{{ $featuredHouses->first()->cover_image ?? asset('assets/housing/property-01.webp') }}" alt="ME FOR YOU Housing Services" loading="lazy" decoding="async" />
+                        @if ($featuredHouses->isNotEmpty())
+                            <img src="{{ $featuredHouses->first()->cover_image ?? asset('assets/housing/property-01.webp') }}"
+                                alt="ME FOR YOU Housing Services" loading="lazy" decoding="async" />
                         @else
-                            <img src="{{ asset('assets/housing/property-01.webp') }}" alt="ME FOR YOU Housing Services" loading="lazy" decoding="async" />
+                            <img src="{{ asset('assets/housing/property-01.webp') }}"
+                                alt="ME FOR YOU Housing Services" loading="lazy" decoding="async" />
                         @endif
                         <div class="fallback">Housing Photo</div>
                     </div>
@@ -1557,10 +1577,12 @@
             <div class="service-card reveal">
                 <div class="service-img">
                     <div class="img-wrapper">
-                        @if($featuredCars->isNotEmpty())
-                            <img src="{{ $featuredCars->first()->cover_image ?? asset('assets/transport/car-01.webp') }}" alt="ME FOR YOU Transport Services" loading="lazy" decoding="async" />
+                        @if ($featuredCars->isNotEmpty())
+                            <img src="{{ $featuredCars->first()->cover_image ?? asset('assets/transport/car-01.webp') }}"
+                                alt="ME FOR YOU Transport Services" loading="lazy" decoding="async" />
                         @else
-                            <img src="{{ asset('assets/transport/car-01.webp') }}" alt="ME FOR YOU Transport Services" loading="lazy" decoding="async" />
+                            <img src="{{ asset('assets/transport/car-01.webp') }}"
+                                alt="ME FOR YOU Transport Services" loading="lazy" decoding="async" />
                         @endif
                         <div class="fallback">Car Photo</div>
                     </div>
@@ -1597,10 +1619,11 @@
         </div>
 
         <div class="gallery-grid">
-            @foreach($galleryImages as $index => $image)
+            @foreach ($galleryImages as $index => $image)
                 <div class="gal-item reveal" onclick="openLightbox('{{ $image['src'] }}','{{ $image['alt'] }}')">
                     <div class="img-wrapper">
-                        <img src="{{ $image['src'] }}" alt="{{ $image['alt'] }}" loading="lazy" decoding="async" />
+                        <img src="{{ $image['src'] }}" alt="{{ $image['alt'] }}" loading="lazy"
+                            decoding="async" />
                         <div class="fallback">{{ $image['label'] }}</div>
                     </div>
                     <div class="gal-overlay"><span class="gal-label">{{ $image['label'] }}</span></div>
@@ -1622,14 +1645,15 @@
                 <p class="section-label" style="color:var(--gold-light);">Client Reviews</p>
                 <h2 class="section-title">What Our Clients <em style="color:var(--gold-light);">Say</em></h2>
             </div>
-            <a href="https://www.instagram.com/meforyou_rw/" target="_blank" rel="noopener" class="btn-outline">Follow Us on Instagram</a>
+            <a href="https://www.instagram.com/meforyou_rw/" target="_blank" rel="noopener"
+                class="btn-outline">Follow Us on Instagram</a>
         </div>
 
         <div class="testimonials-grid">
             @forelse($testimonials as $testimonial)
                 <div class="testi-card reveal">
                     <div class="testi-stars">
-                        @for($i = 0; $i < $testimonial['stars']; $i++)
+                        @for ($i = 0; $i < $testimonial['stars']; $i++)
                             ★
                         @endfor
                     </div>
@@ -1637,7 +1661,8 @@
                     <div class="testi-author">
                         <div class="testi-avatar">
                             <div class="img-wrapper">
-                                <img src="{{ asset($testimonial['avatar']) }}" alt="{{ $testimonial['name'] }}" loading="lazy" decoding="async" />
+                                <img src="{{ asset($testimonial['avatar']) }}" alt="{{ $testimonial['name'] }}"
+                                    loading="lazy" decoding="async" />
                                 <div class="fallback">{{ substr($testimonial['name'], 0, 2) }}</div>
                             </div>
                         </div>
@@ -1650,11 +1675,13 @@
             @empty
                 <div class="testi-card reveal">
                     <div class="testi-stars">★★★★★</div>
-                    <p class="testi-quote">"ME FOR YOU found us the perfect apartment in Kigali within a week. The whole process was smooth, transparent, and stress-free. Highly recommended!"</p>
+                    <p class="testi-quote">"ME FOR YOU found us the perfect apartment in Kigali within a week. The
+                        whole process was smooth, transparent, and stress-free. Highly recommended!"</p>
                     <div class="testi-author">
                         <div class="testi-avatar">
                             <div class="img-wrapper">
-                                <img src="{{ asset('assets/testimonials/client-01.webp') }}" alt="Amina K." loading="lazy" decoding="async" />
+                                <img src="{{ asset('assets/testimonials/client-01.webp') }}" alt="Amina K."
+                                    loading="lazy" decoding="async" />
                                 <div class="fallback">AK</div>
                             </div>
                         </div>
@@ -1667,11 +1694,13 @@
 
                 <div class="testi-card reveal">
                     <div class="testi-stars">★★★★★</div>
-                    <p class="testi-quote">"Our wedding was absolutely magical. The décor, coordination, and transport everything was handled perfectly. Thank you ME FOR YOU!"</p>
+                    <p class="testi-quote">"Our wedding was absolutely magical. The décor, coordination, and transport
+                        everything was handled perfectly. Thank you ME FOR YOU!"</p>
                     <div class="testi-author">
                         <div class="testi-avatar">
                             <div class="img-wrapper">
-                                <img src="{{ asset('assets/testimonials/client-02.webp') }}" alt="Jean-Pierre & Grace M." loading="lazy" decoding="async" />
+                                <img src="{{ asset('assets/testimonials/client-02.webp') }}"
+                                    alt="Jean-Pierre & Grace M." loading="lazy" decoding="async" />
                                 <div class="fallback">JG</div>
                             </div>
                         </div>
@@ -1684,11 +1713,13 @@
 
                 <div class="testi-card reveal">
                     <div class="testi-stars">★★★★★</div>
-                    <p class="testi-quote">"We used ME FOR YOU for our company's annual conference transport. Professional drivers, clean vehicles, and always on time. Outstanding service."</p>
+                    <p class="testi-quote">"We used ME FOR YOU for our company's annual conference transport.
+                        Professional drivers, clean vehicles, and always on time. Outstanding service."</p>
                     <div class="testi-author">
                         <div class="testi-avatar">
                             <div class="img-wrapper">
-                                <img src="{{ asset('assets/testimonials/client-03.webp') }}" alt="David N." loading="lazy" decoding="async" />
+                                <img src="{{ asset('assets/testimonials/client-03.webp') }}" alt="David N."
+                                    loading="lazy" decoding="async" />
                                 <div class="fallback">DN</div>
                             </div>
                         </div>
@@ -1713,7 +1744,8 @@
                 </p>
             </div>
             <div class="cta-actions">
-                <a href="https://wa.me/+250788202209" class="btn-cta-white" target="_blank" rel="noopener">Get in Touch →</a>
+                <a href="https://wa.me/+250788202209" class="btn-cta-white" target="_blank" rel="noopener">Get in
+                    Touch →</a>
             </div>
         </div>
     </section>
@@ -1730,8 +1762,10 @@
                         across the country.
                     </p>
                     <div class="footer-social">
-                        <a href="https://www.instagram.com/meforyou_rw/" target="_blank" rel="noopener" aria-label="Instagram">
-                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <a href="https://www.instagram.com/meforyou_rw/" target="_blank" rel="noopener"
+                            aria-label="Instagram">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none"
+                                stroke="currentColor" stroke-width="2">
                                 <rect x="2" y="2" width="20" height="20" rx="5" />
                                 <circle cx="12" cy="12" r="4" />
                                 <circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none" />
