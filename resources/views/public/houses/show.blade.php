@@ -1,7 +1,19 @@
 @extends('layouts.public')
 
-@section('title', $pageTitle . ' | ME FOR YOU')
+@section('title', $house['title'] . ' | ME FOR YOU')
 
+{{-- ===== OG / SEO OVERRIDES ===== --}}
+@section('og_title', $house['title'] . ' | ME FOR YOU')
+@section('og_description', Str::limit($house['description'] ?? 'Property details and rental information.', 150))
+@section('og_image', asset($house['image']))
+@section('og_image_alt', $house['title'])
+@section('og_image_width', '1200')
+@section('og_image_height', '630')
+
+@section('meta_description', Str::limit($house['description'] ?? 'Property details and rental information.', 160))
+@section('meta_keywords', 'ME FOR YOU, housing, ' . strtolower($house['type']) . ', ' . $house['location'] . ', Kigali, Rwanda')
+
+{{-- ===== CONTENT ===== --}}
 @section('content')
 <section class="pt-28 pb-16 px-6">
     <div class="max-w-[1200px] mx-auto">

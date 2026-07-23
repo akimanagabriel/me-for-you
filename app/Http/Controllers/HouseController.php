@@ -237,4 +237,13 @@ class HouseController extends Controller
         $path = Str::after($url, Storage::disk('public')->url(''));
         Storage::disk('public')->delete($path);
     }
+
+
+    public function toggleFeatured(House $house): RedirectResponse
+    {
+        $house->update(['is_featured' => !$house->is_featured]);
+
+        $status = $house->is_featured ? 'featured' : 'unfeatured';
+        return redirect()->back()->with('success', "House {$status} successfully.");
+    }
 }

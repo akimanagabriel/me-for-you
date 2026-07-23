@@ -260,4 +260,13 @@ class EventController extends Controller
         $path = Str::after($url, Storage::disk('public')->url(''));
         Storage::disk('public')->delete($path);
     }
+
+
+    public function toggleFeatured(Event $event): RedirectResponse
+    {
+        $event->update(['is_featured' => !$event->is_featured]);
+
+        $status = $event->is_featured ? 'featured' : 'unfeatured';
+        return redirect()->back()->with('success', "Event {$status} successfully.");
+    }
 }

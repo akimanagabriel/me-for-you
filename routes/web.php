@@ -55,8 +55,13 @@ Route::middleware('auth')->group(function () {
         Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
 
         Route::resource("houses", HouseController::class)->names("houses");
+        Route::put('houses/{house}/toggle-featured', [HouseController::class, 'toggleFeatured'])->name('houses.toggle-featured');
+
         Route::resource('cars', CarController::class)->names('cars');
+        Route::put('cars/{car}/toggle-featured', [CarController::class, 'toggleFeatured'])->name('cars.toggle-featured');
+
         Route::resource('events', EventController::class)->names('events');
+        Route::put('events/{event}/toggle-featured', [EventController::class, 'toggleFeatured'])->name('events.toggle-featured');
 
         Route::resource('team-members', TeamMemberController::class)->names('team-members')->except(['show']);
         Route::put('team-members/{teamMember}/toggle', [TeamMemberController::class, 'toggleActive'])->name('team-members.toggle');

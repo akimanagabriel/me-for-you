@@ -270,4 +270,12 @@ class CarController extends Controller
         $path = Str::after($url, Storage::disk('public')->url(''));
         Storage::disk('public')->delete($path);
     }
+
+    public function toggleFeatured(Car $car): RedirectResponse
+    {
+        $car->update(['is_featured' => !$car->is_featured]);
+
+        $status = $car->is_featured ? 'featured' : 'unfeatured';
+        return redirect()->back()->with('success', "Car {$status} successfully.");
+    }
 }

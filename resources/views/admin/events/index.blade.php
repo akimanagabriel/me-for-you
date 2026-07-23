@@ -9,7 +9,7 @@
         <p class="text-sm text-base-content/60 mt-1">Manage all your events in one place.</p>
     </div>
     <a href="{{ route('admin.events.create') }}" class="btn btn-primary btn-sm">
-        <i class="fas fa-plus-circle mr-2"></i> Add New Event
+        <i class="fa-solid fa-plus-circle mr-2"></i> Add New Event
     </a>
 </div>
 
@@ -46,7 +46,7 @@
             </select>
         </div>
         <button type="submit" class="btn btn-primary btn-sm">
-            <i class="fas fa-search mr-1"></i> Filter
+            <i class="fa-solid fa-search mr-1"></i> Filter
         </button>
         @if(request()->hasAny(['search', 'status', 'category']))
             <a href="{{ route('admin.events.index') }}" class="btn btn-ghost btn-sm">Clear</a>
@@ -64,12 +64,12 @@
                     <img src="{{ $event->cover_image }}" alt="{{ $event->title }}" class="w-full h-full object-cover">
                 @else
                     <div class="w-full h-full flex items-center justify-center text-gray-300">
-                        <i class="fas fa-calendar-alt text-5xl"></i>
+                        <i class="fa-solid fa-calendar-days text-5xl"></i>
                     </div>
                 @endif
                 
-                <!-- Status Badge -->
-                <div class="absolute top-3 left-3">
+                <!-- Status Badge (left) -->
+                <div class="absolute top-3 left-3 z-10">
                     <span class="px-2 py-1 rounded-full text-xs font-semibold
                         @switch($event->status)
                             @case('active') bg-green-100 text-green-800 @break
@@ -82,29 +82,42 @@
                         {{ ucfirst($event->status) }}
                     </span>
                 </div>
-                
-                <!-- Featured Badge -->
-                @if($event->is_featured)
-                    <div class="absolute top-3 right-3">
-                        <span class="px-2 py-1 rounded-full text-xs font-semibold bg-orange-100 text-orange-800">
-                            <i class="fas fa-star mr-1"></i> Featured
-                        </span>
-                    </div>
-                @endif
 
-                <!-- Overlay with Action Buttons - Appears on Hover -->
-                <div class="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center gap-3">
+                <!-- Featured Toggle (right) - Always clickable -->
+                <div class="absolute top-3 right-3 z-20 pointer-events-auto">
+                    <div class="flex items-center gap-2 bg-white/90 px-2 py-1 rounded-full shadow-sm">
+                        <span class="text-xs text-gray-500 font-medium">Featured</span>
+                        <form method="POST" action="{{ route('admin.events.toggle-featured', $event) }}" 
+                              class="inline-flex items-center" 
+                              id="toggle-featured-form-{{ $event->id }}">
+                            @csrf
+                            @method('PUT')
+                            <label class="cursor-pointer">
+                                <input 
+                                    type="checkbox" 
+                                    class="toggle toggle-sm toggle-accent" 
+                                    {{ $event->is_featured ? 'checked' : '' }}
+                                    onchange="document.getElementById('toggle-featured-form-{{ $event->id }}').submit();"
+                                    title="{{ $event->is_featured ? 'Click to unfeature' : 'Click to feature' }}"
+                                >
+                            </label>
+                        </form>
+                    </div>
+                </div>
+
+                <!-- Overlay with Action Buttons (hover) -->
+                <div class="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center gap-3 pointer-events-none group-hover:pointer-events-auto">
                     <a href="{{ route('admin.events.show', $event) }}" 
                        class="transform -translate-y-2 group-hover:translate-y-0 transition-all duration-300 inline-flex items-center gap-2 px-4 py-2 bg-blue-500 text-white text-sm font-medium rounded-lg hover:bg-blue-600 shadow-lg">
-                        <i class="fas fa-eye"></i> View
+                        <i class="fa-solid fa-eye"></i> View
                     </a>
                     <a href="{{ route('admin.events.edit', $event) }}" 
                        class="transform -translate-y-2 group-hover:translate-y-0 transition-all duration-300 delay-75 inline-flex items-center gap-2 px-4 py-2 bg-amber-500 text-white text-sm font-medium rounded-lg hover:bg-amber-600 shadow-lg">
-                        <i class="fas fa-pen"></i> Edit
+                        <i class="fa-solid fa-pen"></i> Edit
                     </a>
                     <button onclick="confirmDelete('{{ $event->id }}', '{{ $event->title }}')" 
                             class="transform -translate-y-2 group-hover:translate-y-0 transition-all duration-300 delay-150 inline-flex items-center gap-2 px-4 py-2 bg-red-500 text-white text-sm font-medium rounded-lg hover:bg-red-600 shadow-lg">
-                        <i class="fas fa-trash"></i> Delete
+                        <i class="fa-solid fa-trash"></i> Delete
                     </button>
                     <form id="delete-form-{{ $event->id }}" 
                           action="{{ route('admin.events.destroy', $event) }}" 
@@ -127,7 +140,7 @@
                 
                 <div class="space-y-1 text-sm text-gray-600 flex-1">
                     <div>
-                        <i class="fas fa-calendar-day w-4 text-gray-400"></i>
+                        <i class="fa-regular fa-calendar-day w-4 text-gray-400"></i>
                         {{ $event->event_date->format('M d, Y') }}
                         @if($event->start_time)
                             <span class="text-xs text-gray-500">
@@ -136,18 +149,18 @@
                         @endif
                     </div>
                     <div>
-                        <i class="fas fa-map-marker-alt w-4 text-gray-400"></i>
+                        <i class="fa-solid fa-location-dot w-4 text-gray-400"></i>
                         {{ $event->location }}, {{ $event->city }}
                     </div>
                     @if($event->venue)
                         <div>
-                            <i class="fas fa-building w-4 text-gray-400"></i>
+                            <i class="fa-regular fa-building w-4 text-gray-400"></i>
                             {{ $event->venue }}
                         </div>
                     @endif
                     @if($event->speaker)
                         <div>
-                            <i class="fas fa-user w-4 text-gray-400"></i>
+                            <i class="fa-regular fa-user w-4 text-gray-400"></i>
                             {{ $event->speaker }}
                         </div>
                     @endif
@@ -168,7 +181,7 @@
                         </div>
                         <div class="flex items-center gap-2">
                             <span class="text-xs text-gray-500">
-                                <i class="far fa-eye mr-1"></i> {{ number_format($event->views_count) }}
+                                <i class="fa-regular fa-eye mr-1"></i> {{ number_format($event->views_count) }}
                             </span>
                         </div>
                     </div>
@@ -179,12 +192,12 @@
         <div class="col-span-full text-center py-12">
             <div class="flex flex-col items-center">
                 <div class="w-20 h-20 rounded-full bg-gray-100 flex items-center justify-center mb-4">
-                    <i class="fas fa-calendar-alt text-3xl text-gray-300"></i>
+                    <i class="fa-solid fa-calendar-days text-3xl text-gray-300"></i>
                 </div>
                 <h3 class="text-lg font-medium text-gray-900">No events found</h3>
                 <p class="text-sm text-gray-500 mt-1">Get started by creating your first event.</p>
                 <a href="{{ route('admin.events.create') }}" class="btn btn-primary btn-sm mt-4">
-                    <i class="fas fa-plus-circle mr-2"></i> Add New Event
+                    <i class="fa-solid fa-plus-circle mr-2"></i> Add New Event
                 </a>
             </div>
         </div>
@@ -203,7 +216,6 @@
 .group {
     transition: all 0.3s ease;
 }
-
 .group:hover {
     transform: translateY(-4px);
 }
@@ -218,23 +230,69 @@
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-/* Ensure buttons are clickable on hover */
-.group:hover .absolute.inset-0 {
-    pointer-events: auto;
-}
-
-.group .absolute.inset-0 {
-    pointer-events: none;
-}
-
-.group:hover .absolute.inset-0 {
-    pointer-events: auto;
-}
-
-.group .absolute.inset-0 a,
-.group .absolute.inset-0 button {
-    pointer-events: auto;
+/* Toggle switch styling (fallback for DaisyUI) */
+.toggle {
+    --tglbg: #d1d5db;
+    appearance: none;
+    -webkit-appearance: none;
+    background-color: var(--tglbg);
     cursor: pointer;
+    display: inline-block;
+    height: 1.25rem;
+    width: 2.25rem;
+    border-radius: 9999px;
+    transition: all 0.15s ease-in-out;
+    position: relative;
+    flex-shrink: 0;
+    border: 1px solid #d1d5db;
+}
+.toggle:checked {
+    --tglbg: #b87f3a;
+    border-color: #b87f3a;
+}
+.toggle:checked.toggle-accent {
+    --tglbg: #b87f3a;
+    border-color: #b87f3a;
+}
+.toggle:focus-visible {
+    outline: 2px solid #b87f3a;
+    outline-offset: 2px;
+}
+.toggle-sm:before {
+    content: "";
+    display: block;
+    width: 0.875rem;
+    height: 0.875rem;
+    background-color: #ffffff;
+    border-radius: 9999px;
+    transition: all 0.15s ease-in-out;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    transform: translateX(0.125rem);
+}
+.toggle-sm:checked:before {
+    transform: translateX(1rem);
+}
+.toggle-sm:checked.toggle-accent:before {
+    background-color: #ffffff;
+}
+
+/* Responsive adjustments for the toggle */
+@media (max-width: 480px) {
+    .absolute.top-3.right-3 .toggle-sm {
+        height: 1rem;
+        width: 1.8rem;
+    }
+    .absolute.top-3.right-3 .toggle-sm:before {
+        width: 0.7rem;
+        height: 0.7rem;
+    }
+    .absolute.top-3.right-3 .toggle-sm:checked:before {
+        transform: translateX(0.8rem);
+    }
+    .absolute.top-3.right-3 .flex.items-center.gap-2 {
+        padding: 0.25rem 0.5rem;
+        font-size: 0.65rem;
+    }
 }
 </style>
 

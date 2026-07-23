@@ -15,14 +15,19 @@
     <title>@yield('title', config('app.name', 'ME FOR YOU'))</title>
 
     <!-- ═══════════ OPEN GRAPH / SEO ═══════════ -->
+    {{-- Basic OG tags --}}
     <meta property="og:title" content="@yield('og_title', 'ME FOR YOU | Professional Companion for Housing, Events & Transport')" />
     <meta property="og:description" content="@yield('og_description', 'From premium housing support to unforgettable events and reliable transport, ME FOR YOU helps you move through every milestone with confidence.')" />
     <meta property="og:type" content="website" />
     <meta property="og:url" content="{{ url()->current() }}" />
-    <meta property="og:image" content="{{ asset('android-chrome-512x512.png') }}" />
-    <meta property="og:image:alt" content="ME FOR YOU logo" />
-    <meta property="og:image:width" content="512" />
-    <meta property="og:image:height" content="512" />
+
+    {{-- Dynamic OG Image – override in child views using @section('og_image', $yourImageUrl) --}}
+    <meta property="og:image" content="@yield('og_image', asset('android-chrome-512x512.png'))" />
+    <meta property="og:image:secure_url" content="@yield('og_image', asset('android-chrome-512x512.png'))" />
+    <meta property="og:image:alt" content="@yield('og_image_alt', 'ME FOR YOU logo')" />
+    <meta property="og:image:width" content="@yield('og_image_width', '512')" />
+    <meta property="og:image:height" content="@yield('og_image_height', '512')" />
+
     <meta property="og:site_name" content="ME FOR YOU" />
     <meta property="og:locale" content="en_US" />
 
@@ -30,8 +35,8 @@
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content="@yield('og_title', 'ME FOR YOU | Professional Companion for Housing, Events & Transport')" />
     <meta name="twitter:description" content="@yield('og_description', 'Trusted housing, event management, and transport services in Kigali, Rwanda.')" />
-    <meta name="twitter:image" content="{{ asset('android-chrome-512x512.png') }}" />
-    <meta name="twitter:image:alt" content="ME FOR YOU logo" />
+    <meta name="twitter:image" content="@yield('og_image', asset('android-chrome-512x512.png'))" />
+    <meta name="twitter:image:alt" content="@yield('og_image_alt', 'ME FOR YOU logo')" />
 
     <!-- SEO Meta -->
     <meta name="description" content="@yield('meta_description', 'ME FOR YOU offers trusted housing, event management, and transport services in Kigali, Rwanda. Your professional companion for every milestone.')" />
@@ -132,6 +137,12 @@
         html {
             scroll-behavior: smooth;
         }
+
+        /* ─── ACTIVE NAV LINK ─────────────────────────────────────── */
+        .nav-link-active {
+            color: var(--gold) !important;
+            font-weight: 600;
+        }
     </style>
 
     @vite(['resources/css/app.css', 'resources/js/app.js'])
@@ -153,22 +164,42 @@
 
                 <!-- Desktop Navigation -->
                 <div class="hidden md:flex items-center space-x-8">
+                    {{-- EVENTS – matches services.events* and services.event.* --}}
                     <a href="{{ route('services.events') }}"
-                        class="text-gray-600 hover:text-gold transition-colors font-medium text-sm">Events</a>
+                        class="text-gray-600 hover:text-gold transition-colors font-medium text-sm {{ request()->routeIs('services.events*') || request()->routeIs('services.event.*') ? 'nav-link-active' : '' }}">
+                        Events
+                    </a>
+
+                    {{-- HOUSING – matches services.housing and services.house.* --}}
                     <a href="{{ route('services.housing') }}"
-                        class="text-gray-600 hover:text-gold transition-colors font-medium text-sm">Housing</a>
+                        class="text-gray-600 hover:text-gold transition-colors font-medium text-sm {{ request()->routeIs('services.housing') || request()->routeIs('services.house.*') ? 'nav-link-active' : '' }}">
+                        Housing
+                    </a>
+
+                    {{-- TRANSPORT – matches services.transport and services.car.* --}}
                     <a href="{{ route('services.transport') }}"
-                        class="text-gray-600 hover:text-gold transition-colors font-medium text-sm">Transport</a>
+                        class="text-gray-600 hover:text-gold transition-colors font-medium text-sm {{ request()->routeIs('services.transport') || request()->routeIs('services.car.*') ? 'nav-link-active' : '' }}">
+                        Transport
+                    </a>
+
                     <a href="{{ route('about') }}"
-                        class="text-gray-600 hover:text-gold transition-colors font-medium text-sm">About</a>
+                        class="text-gray-600 hover:text-gold transition-colors font-medium text-sm {{ request()->routeIs('about') ? 'nav-link-active' : '' }}">
+                        About
+                    </a>
                     <a href="{{ route('team') }}"
-                        class="text-gray-600 hover:text-gold transition-colors font-medium text-sm">Team</a>
+                        class="text-gray-600 hover:text-gold transition-colors font-medium text-sm {{ request()->routeIs('team*') ? 'nav-link-active' : '' }}">
+                        Team
+                    </a>
                     @auth
                         <a href="{{ route('admin.dashboard') }}"
-                            class="text-gold hover:text-gold-dark transition-colors font-medium text-sm">Dashboard</a>
+                            class="text-gold hover:text-gold-dark transition-colors font-medium text-sm {{ request()->routeIs('admin.*') ? 'nav-link-active' : '' }}">
+                            Dashboard
+                        </a>
                     @endauth
                     <a href="{{ route('contact') }}"
-                        class="bg-gold text-white px-4 py-2 rounded-lg hover:bg-gold-dark transition-colors font-medium text-sm">Contact</a>
+                        class="bg-gold text-white px-4 py-2 rounded-lg hover:bg-gold-dark transition-colors font-medium text-sm {{ request()->routeIs('contact') ? 'nav-link-active bg-gold-dark' : '' }}">
+                        Contact
+                    </a>
                 </div>
 
                 <!-- Mobile Menu Button -->
@@ -182,21 +213,35 @@
         <div class="md:hidden hidden bg-white border-t border-gray-100" id="mobileMenu">
             <div class="px-4 pt-2 pb-4 space-y-1">
                 <a href="{{ route('services.events') }}"
-                    class="block text-gray-600 hover:text-gold py-2.5 transition-colors font-medium">Events</a>
+                    class="block text-gray-600 hover:text-gold py-2.5 transition-colors font-medium {{ request()->routeIs('services.events*') || request()->routeIs('services.event.*') ? 'text-gold font-semibold' : '' }}">
+                    Events
+                </a>
                 <a href="{{ route('services.housing') }}"
-                    class="block text-gray-600 hover:text-gold py-2.5 transition-colors font-medium">Housing</a>
+                    class="block text-gray-600 hover:text-gold py-2.5 transition-colors font-medium {{ request()->routeIs('services.housing') || request()->routeIs('services.house.*') ? 'text-gold font-semibold' : '' }}">
+                    Housing
+                </a>
                 <a href="{{ route('services.transport') }}"
-                    class="block text-gray-600 hover:text-gold py-2.5 transition-colors font-medium">Transport</a>
+                    class="block text-gray-600 hover:text-gold py-2.5 transition-colors font-medium {{ request()->routeIs('services.transport') || request()->routeIs('services.car.*') ? 'text-gold font-semibold' : '' }}">
+                    Transport
+                </a>
                 <a href="{{ route('about') }}"
-                    class="block text-gray-600 hover:text-gold py-2.5 transition-colors font-medium">About</a>
+                    class="block text-gray-600 hover:text-gold py-2.5 transition-colors font-medium {{ request()->routeIs('about') ? 'text-gold font-semibold' : '' }}">
+                    About
+                </a>
                 <a href="{{ route('team') }}"
-                    class="block text-gray-600 hover:text-gold py-2.5 transition-colors font-medium">Team</a>
+                    class="block text-gray-600 hover:text-gold py-2.5 transition-colors font-medium {{ request()->routeIs('team*') ? 'text-gold font-semibold' : '' }}">
+                    Team
+                </a>
                 @auth
                     <a href="{{ route('admin.dashboard') }}"
-                        class="block text-gold hover:text-gold-dark py-2.5 transition-colors font-medium">Dashboard</a>
+                        class="block text-gold hover:text-gold-dark py-2.5 transition-colors font-medium {{ request()->routeIs('admin.*') ? 'text-gold font-semibold' : '' }}">
+                        Dashboard
+                    </a>
                 @endauth
                 <a href="{{ route('contact') }}"
-                    class="block bg-gold text-white text-center px-4 py-2.5 rounded-lg hover:bg-gold-dark transition-colors font-medium mt-2">Contact</a>
+                    class="block bg-gold text-white text-center px-4 py-2.5 rounded-lg hover:bg-gold-dark transition-colors font-medium mt-2 {{ request()->routeIs('contact') ? 'bg-gold-dark' : '' }}">
+                    Contact
+                </a>
             </div>
         </div>
     </nav>
